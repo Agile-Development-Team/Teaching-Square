@@ -5,8 +5,41 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    // 课程列表
     courses: [],
+    // 选择进入详细课程界面的课程信息
     selectCourse: {},
+    // 课件列表
+    selectCoursewares: [
+      {
+        pptId: '',
+        pptName: '教师尚未上传任何内容',
+        publishedTime: '-',  
+        content: '-'
+      }
+    ],
+    // 作业列表
+    selectHomeworks: [
+      {
+        homeworkId: '01',
+        homeworkName: '教师尚未布置任何作业',
+        deadline: '2022-1-23',  
+        grade: '100分'
+      },
+    ],
+    // 为1展示作业列表，为2展示具体作业内容
+    showOneHomework: '1',
+    // 具体作业内容
+    selectedHomework: {
+      homeworkId: '01',
+      homeworkName: '教师尚未布置任何作业',
+      deadline: '2022-1-23',  
+      grade: '100分',
+      description: '作业描述……',
+      content: '作业内容……',
+      status: '0', // 0作业不可提交，1作业可提交
+      percentage: '5%',
+    }
   },
   mutations: {
     CHANGE_COURSES(state, payload){
@@ -14,6 +47,15 @@ export default new Vuex.Store({
     },
     CHANGE_SELECTCOURSE(state, payload){
       state.selectCourse = payload;
+    },
+    CHANGE_SELLECTCOURSEWARES(state, payload){
+      state.selectCoursewares = payload;
+    },
+    CHANGE_SHOWONEHOMEWORK(state, payload){
+      state.showOneHomework = payload;
+    },
+    CHANGE_SELECTEDHOMEWORK(state, payload){
+      state.selectedHomework = payload;
     },
   },
   actions: {
