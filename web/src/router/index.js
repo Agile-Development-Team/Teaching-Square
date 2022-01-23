@@ -25,6 +25,11 @@ const routes = [
     component: () => import('../views/Student.vue')
   },
   {
+    path: '/studentcourse',
+    name: 'StudentCourse',
+    component: () => import('../views/Studentcourse.vue')
+  },
+  {
     path: '/:catchAll(.*)',
     name: '/404',
     component: () => import('../views/404.vue')
