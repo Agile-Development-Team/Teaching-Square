@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+<<<<<<< HEAD
     // 课程列表
     courses: [],
     // 选择进入详细课程界面的课程信息
@@ -40,6 +41,10 @@ export default new Vuex.Store({
       status: '0', // 0作业不可提交，1作业可提交
       percentage: '5%',
     }
+=======
+    courses: [],
+    selectCourse: {},
+>>>>>>> b240bfbbe8e65a4aba5924bba989ba1a35a3e8a8
   },
   mutations: {
     CHANGE_COURSES(state, payload){
@@ -48,6 +53,7 @@ export default new Vuex.Store({
     CHANGE_SELECTCOURSE(state, payload){
       state.selectCourse = payload;
     },
+<<<<<<< HEAD
     CHANGE_SELLECTCOURSEWARES(state, payload){
       state.selectCoursewares = payload;
     },
@@ -57,6 +63,8 @@ export default new Vuex.Store({
     CHANGE_SELECTEDHOMEWORK(state, payload){
       state.selectedHomework = payload;
     },
+=======
+>>>>>>> b240bfbbe8e65a4aba5924bba989ba1a35a3e8a8
   },
   actions: {
   },
