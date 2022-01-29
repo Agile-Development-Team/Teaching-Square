@@ -1,0 +1,10 @@
+package com.study.backside.bean;
+
+import lombok.Data;
+
+@Data
+public class Course {
+    private int courseId;
+    private String courseName;
+    private String code;
+}
