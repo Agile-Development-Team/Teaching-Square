@@ -30,10 +30,16 @@ const routes = [
     component: () => import('../views/Studentcourse.vue')
   },
   {
+    path:'/teacher',
+    name:'Teacher',
+    component:()=>import('../components/teacher/Teacher.vue'),
+  },
+  {
     path: '/:catchAll(.*)',
     name: '/404',
     component: () => import('../views/404.vue')
-  }
+  },
+ 
 ]
 
 const router = new VueRouter({
