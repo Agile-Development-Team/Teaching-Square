@@ -1,10 +1,13 @@
 package com.study.backside.controller;
 
+import com.study.backside.response.CoursesRes;
+import com.study.backside.response.Result;
 import com.study.backside.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class CourseController {
@@ -19,4 +22,28 @@ public class CourseController {
         return courseService.getAllCourses();
 
     }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/studentCourses", method = RequestMethod.GET)
+    public @ResponseBody
+    List<CoursesRes> getStudentCourses(@RequestParam(value = "number") String number) throws IOException {
+        return courseService.getStudentCourses(number);
+
+    }
+
+    //学生选课
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/chooseCourse", method = RequestMethod.POST)
+    public @ResponseBody
+    Result chooseCourse(@RequestParam(value = "number") String number,
+                        @RequestParam(value = "courseId") int courseId,
+                        @RequestParam(value = "courseCode") String courseCode){
+        return courseService.chooseCourse(number,courseId,courseCode);
+
+
+
+    }
+
+
+
 }

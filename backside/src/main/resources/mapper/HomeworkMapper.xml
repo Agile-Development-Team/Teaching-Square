@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.study.backside.mapper.HomeworkMapper">
+
+    <select id="uploadHomework" resultType="java.lang.Integer">
+        insert into student_homework (number, course_id, homework_id, link, grade)
+        values (#{number}, #{courseId}, #{homeworkId}, #{link}, #{grade})
+    </select>
+
+    <select id="getCourseIdByStudentId" resultType="java.lang.Integer">
+        SELECT course_id FROM student_course where number=#{number}
+    </select>
+
+    <select id="getCourseById" resultType="com.study.backside.bean.Course">
+        SELECT * FROM course where course_id=#{courseId}
+    </select>
+
+
+</mapper>
