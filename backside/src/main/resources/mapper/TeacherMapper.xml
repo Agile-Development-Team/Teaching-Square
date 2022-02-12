@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.study.backside.mapper.TeacherMapper">
+
+
+
+    <select id="getTeacherByCourseId" resultType="com.study.backside.bean.Teacher">
+        select * from teacher where number in(
+          select number from teacher_course where course_id=#{courseId}
+        )
+    </select>
+
+
+</mapper>
