@@ -1,38 +1,34 @@
 package com.study.backside.response;
 
+import lombok.Data;
+
 /**
  * @Author Carol9s
  * @Classname
  * @Date 2022/2/13 20:09
  */
+@Data
 public class LoginResult {
     private int code;
     private boolean success;
     private String msg;
     private int identity;
+    private Object data;
 
-    public static LoginResult successStudent() {
+    public static LoginResult success(Object object) {
         LoginResult loginresult = new LoginResult();
         loginresult.setCode(LRenum.SUCCESS_STUDENT.getCode());
         loginresult.setMsg(LRenum.SUCCESS_STUDENT.getMsg());
         loginresult.setSuccess(LRenum.SUCCESS_STUDENT.getSuccess());
-        loginresult.setIdentity(LRenum.SUCCESS_STUDENT.getIdentity());
+        loginresult.setData(object);
         return loginresult;
     }
-    public static LoginResult successTeacher() {
-        LoginResult loginresult = new LoginResult();
-        loginresult.setCode(LRenum.SUCCESS_TEACHER.getCode());
-        loginresult.setMsg(LRenum.SUCCESS_TEACHER.getMsg());
-        loginresult.setSuccess(LRenum.SUCCESS_TEACHER.getSuccess());
-        loginresult.setIdentity(LRenum.SUCCESS_TEACHER.getIdentity());
-        return loginresult;
-    }
-    public static LoginResult error() {
+    public static LoginResult error(Object object) {
         LoginResult loginresult = new LoginResult();
         loginresult.setCode(LRenum.ERROR.getCode());
         loginresult.setMsg(LRenum.ERROR.getMsg());
         loginresult.setSuccess(LRenum.ERROR.getSuccess());
-        loginresult.setIdentity(LRenum.ERROR.getIdentity());
+        loginresult.setData(object);
         return loginresult;
     }
     /*
