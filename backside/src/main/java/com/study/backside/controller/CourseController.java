@@ -40,10 +40,13 @@ public class CourseController {
                         @RequestParam(value = "courseCode") String courseCode){
         return courseService.chooseCourse(number,courseId,courseCode);
 
-
-
     }
 
-
+    /**
+     * 课程作业列表
+     */
+    /*@CrossOrigin(origins = "*")
+    @RequestMapping(value = "/courseHomeworks", method = RequestMethod.GET)
+    public List<>*/
 
 }

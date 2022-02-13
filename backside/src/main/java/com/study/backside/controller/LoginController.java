@@ -24,7 +24,8 @@ import java.io.IOException;
 
 @RestController
 public class LogInController {
-        @Autowired
+
+    @Autowired
         private LoginService loginService;
         private IdentityUtil identityUtil;
 
