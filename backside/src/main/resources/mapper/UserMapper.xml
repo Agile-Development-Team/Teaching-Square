@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.study.backside.mapper.UserMapper">
+
+    <select id="getAllUsers" resultType="com.study.backside.bean.User">
+        SELECT * FROM _user
+    </select>
+
+    <select id="getPasswordByNumber" resultType="java.lang.String">
+        SELECT password FROM _user where number=#{number}
+    </select>
+
+    <select id="getIdentityByNumber" resultType="java.lang.Integer">
+        SELECT identity FROM _user where number=#{number}
+    </select>
+
+    <!--添加用户记录-->
+    <insert id="addUser" parameterType="com.study.backside.bean.User">
+        insert into _user (number,password,identity)
+        values (#{number}, #{password}, #{identity})
+    </insert>
+
+
+</mapper>
