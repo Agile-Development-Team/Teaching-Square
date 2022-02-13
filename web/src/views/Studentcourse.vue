@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div class="student-course">
     <div class="title">
       {{this.$store.state.selectCourse['courseName']}} {{this.$store.state.selectCourse['number']}}
@@ -32,15 +31,6 @@ export default({
 
     }
   },
-=======
-  <div>{{this.$store.state.selectCourse['courseName']}} {{this.$store.state.selectCourse['number']}}</div>
-</template>
-
-<script>
-import { defineComponent } from '@vue/composition-api'
-
-export default defineComponent({
->>>>>>> b240bfbbe8e65a4aba5924bba989ba1a35a3e8a8
   setup() {
     
   },
@@ -48,7 +38,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-<<<<<<< HEAD
 .title {
   font-size: 2rem;
   margin-top: 2rem;
@@ -58,7 +47,4 @@ export default defineComponent({
   color: #1e61a3;
   
 }
-=======
-
->>>>>>> b240bfbbe8e65a4aba5924bba989ba1a35a3e8a8
 </style>

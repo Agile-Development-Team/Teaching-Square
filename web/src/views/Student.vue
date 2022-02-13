@@ -1,6 +1,5 @@
 <template>
   <div class="classInf">
-<<<<<<< HEAD
     <el-form
       ref="joinForm"
       :inline="true" 
@@ -18,8 +17,6 @@
         <el-button type="primary" @click="joinCourse('joinForm')">加入</el-button>
       </el-form-item>
     </el-form>
-=======
->>>>>>> b240bfbbe8e65a4aba5924bba989ba1a35a3e8a8
     <el-row
       v-for="index in this.$store.state.courses"
       :key="index['courseId']"
@@ -40,7 +37,6 @@ import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   data(){
-<<<<<<< HEAD
     // var validateCode = (rule, value, callback) => {
     //   if (value === '') {
     //     callback(new Error('请输入选课码'));
@@ -57,10 +53,6 @@ export default defineComponent({
           { required: true, trigger: 'change' }
         ]
       }
-=======
-    return{
-
->>>>>>> b240bfbbe8e65a4aba5924bba989ba1a35a3e8a8
     }
   },
   methods: {
@@ -72,7 +64,6 @@ export default defineComponent({
       }
       this.$store.commit("CHANGE_SELECTCOURSE", course);
       this.$router.replace('/studentcourse')
-<<<<<<< HEAD
     },
     joinCourse(formName){
       this.$refs[formName].validate((valid) => {
@@ -86,9 +77,6 @@ export default defineComponent({
       });
     },
 
-=======
-    }
->>>>>>> b240bfbbe8e65a4aba5924bba989ba1a35a3e8a8
   }
 })
 </script>
