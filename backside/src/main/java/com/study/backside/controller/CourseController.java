@@ -1,6 +1,7 @@
 package com.study.backside.controller;
 
 import com.study.backside.response.CoursesRes;
+import com.study.backside.response.HomeworkRes;
 import com.study.backside.response.Result;
 import com.study.backside.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,9 @@ public class CourseController {
      */
     /*@CrossOrigin(origins = "*")
     @RequestMapping(value = "/courseHomeworks", method = RequestMethod.GET)
-    public List<>*/
+    public List<HomeworkRes> getStudentHomeworks(@RequestParam(value = "number") String number,
+                                                 @RequestParam(value = "courseId") int courseId){
+        return courseService.getAllHomeworks(number, courseId);
+    }*/
 
 }

@@ -53,8 +53,9 @@ public class LogInController {
     public Result register(@RequestParam("number") String number,
                            @RequestParam("password") String password,
                            @RequestParam("identity") int identity) throws IOException{
-        loginService.addUser(number, password, identity);
-        return Result.success();
+        if(loginService.addUser(number, password, identity))
+            return Result.success();
+        return Result.error();
     }
 
 }

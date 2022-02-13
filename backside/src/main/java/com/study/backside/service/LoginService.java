@@ -3,6 +3,7 @@ package com.study.backside.service;
 import com.study.backside.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.IOException;
  * @Classname
  * @Date 2022/2/12 15:20
  */
+@Service
 public class LoginService {
     @Resource
     private UserMapper userMapper;
@@ -30,7 +32,13 @@ public class LoginService {
         return userMapper.getIdentityByNumber(number);
     }
 
-    public void addUser(String number, String password, int identity) throws IOException{
-        userMapper.addUser(number, password, identity);
+    public Boolean addUser(String number, String password, int identity) throws IOException{
+        int i=0;
+        try {
+            i = userMapper.addUser(number, password, identity);
+        } catch (Exception e) {
+            log.error("add user error");
+        }
+        return i == 1? true : false;
     }
 }

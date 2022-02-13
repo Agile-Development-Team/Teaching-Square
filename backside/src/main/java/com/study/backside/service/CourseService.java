@@ -71,7 +71,7 @@ public class CourseService {
 
     }
 
-    public List<HomeworkRes> getAllHomeworks(int courseId) throws IOException {
+    /*public List<HomeworkRes> getAllHomeworks(String number, int courseId) throws IOException {
 
-    }
+    }*/
 }

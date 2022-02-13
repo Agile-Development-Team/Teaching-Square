@@ -1,6 +1,5 @@
 package com.study.backside.response;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 /**
  * @Author Carol9s

@@ -15,5 +15,16 @@
         SELECT * FROM course where course_id=#{courseId}
     </select>
 
+    <select id="getHomeworksByCourseId" resultType="com.study.backside.bean.Homework">
+        SELECT * FROM homework where course_id=#{courseId}
+    </select>
+
+    <select id="getLinkByNumberAndCourseIdAndHomeworkId" resultType="java.lang.String">
+        SELECT link FROM student_homework where course_id=#{courseId}
+    </select>
+    <select id="getScoreByNumberAndCourseIdAndHomeworkId" resultType="java.lang.Double">
+        SELECT grade FROM student_homework where course_id=#{courseId}
+    </select>
+
 
 </mapper>
