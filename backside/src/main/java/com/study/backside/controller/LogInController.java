@@ -33,6 +33,7 @@ public class LogInController {
     /**
      * 登录
      */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public LoginResult login(@RequestParam("number") String number, @RequestParam("password") String password) throws IOException {
         if (loginService.isLogin(number, password)) {
             if (loginService.getIdentity(number) == identityUtil.STUDENT_IDENTITY) {
@@ -47,10 +48,12 @@ public class LogInController {
     /**
      * 注册
      */
-    /*@RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Account register(){
-        Account account = new Account();
-        //todo 注册
-        return account;
-    }*/
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public Result register(@RequestParam("number") String number,
+                           @RequestParam("password") String password,
+                           @RequestParam("identity") int identity) throws IOException{
+        loginService.addUser(number, password, identity);
+        return Result.success();
+    }
+
 }

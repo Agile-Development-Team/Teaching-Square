@@ -18,7 +18,7 @@ public class LoginService {
 
     private Logger log = LoggerFactory.getLogger("LoginService");
 
-    public Boolean isLogin(String number, String password)throws IOException {
+    public Boolean isLogin(String number, String password) throws IOException {
         String correctPassword = userMapper.getPasswordByNumber(number);
         if(correctPassword == password)
             return true;
@@ -28,5 +28,9 @@ public class LoginService {
 
     public int getIdentity(String number)throws IOException{
         return userMapper.getIdentityByNumber(number);
+    }
+
+    public void addUser(String number, String password, int identity) throws IOException{
+        userMapper.addUser(number, password, identity);
     }
 }
