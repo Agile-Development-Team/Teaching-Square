@@ -18,7 +18,7 @@ spring:
     dricer-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/ts?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useAffectedRows=true
     username: root
-    password: zyy123321
+    password: 123456
   servlet:
     multipart:
       enabled: true # 开启文件上传

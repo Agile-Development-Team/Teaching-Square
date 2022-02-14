@@ -28,11 +28,43 @@
     </el-form-item>
     <el-form-item label="选择身份" prop="identity">
       <el-select v-model="registerForm.identity" placeholder="请选择身份">
-        <el-option label="管理员" value="admin"></el-option>
-        <el-option label="教师" value="teacher"></el-option>
-        <el-option label="学生" value="student"></el-option>
+        <el-option label="教师" value=2></el-option>
+        <el-option label="学生" value=1></el-option>
       </el-select>
     </el-form-item>
+
+    <el-form-item label="姓名" prop="name">
+      <el-input
+        v-model="registerForm.name"
+        placeholder="Enter Name..."
+      ></el-input>
+    </el-form-item>
+    <el-form-item label="大学" prop="college">
+      <el-input
+        v-model="registerForm.college"
+        placeholder="Enter College..."
+      ></el-input>
+    </el-form-item>
+    <el-form-item label="专业" prop="major">
+      <el-input
+        v-model="registerForm.major"
+        placeholder="Enter Major..."
+      ></el-input>
+    </el-form-item>
+    <el-form-item label="邮箱" prop="email">
+      <el-input
+        v-model="registerForm.email"
+        placeholder="Enter Email..."
+      ></el-input>
+    </el-form-item>
+    <el-form-item label="手机号" prop="tel">
+      <el-input
+        v-model="registerForm.tel"
+        placeholder="Enter Tel..."
+      ></el-input>
+    </el-form-item>
+
+
     <el-form-item>
       <el-button
         @click="handleRegister('registerForm')"
@@ -62,12 +94,17 @@ export default {
         number: '',
         password: '',
         password2: '',
-        identity: ''
+        identity: '',
+        name: '',
+        college: '',
+        major: '',
+        email: '',
+        tel: '',
       },
       registerRules: {
         number: [
           { required: true, message: '请输入账号', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+          { min: 3, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
@@ -85,7 +122,25 @@ export default {
     handleRegister(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          var params = new URLSearchParams();
+          params.append("number", this.registerForm.number);
+          params.append("password", this.registerForm.password);
+          params.append("identity", this.registerForm.identity);
+          params.append("name", this.registerForm.name);
+          params.append("college", this.registerForm.college);
+          params.append("major", this.registerForm.major);
+          params.append("email", this.registerForm.email);
+          params.append("tel", this.registerForm.tel);
+          
+          this.$axios({
+            method: "post",
+            url: '/api/register',
+            data: params
+          }).then(res => {
+            console.log(res.data)
+            this.$router.replace('/login')
+          });
+
         } else {
           console.log('error submit!!');
           return false;

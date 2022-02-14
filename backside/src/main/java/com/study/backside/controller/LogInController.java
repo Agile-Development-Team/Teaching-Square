@@ -1,10 +1,6 @@
 package com.study.backside.controller;
 
-import com.study.backside.util.Account;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.study.backside.response.LoginResult;
 import com.study.backside.response.Result;
 import com.study.backside.service.CourseService;
@@ -34,16 +30,16 @@ public class LogInController {
     /**
      * 登录
      */
+    @CrossOrigin(origins = "*")
+    //@PostMapping("/login")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public LoginResult login(@RequestParam("number") String number, @RequestParam("password") String password) throws IOException {
         if (loginService.isLogin(number, password)) {
-            if (loginService.getIdentity(number) == identityUtil.STUDENT_IDENTITY) {
-                return LoginResult.successStudent();
-            } else if (loginService.getIdentity(number) == identityUtil.TEACHER_IDENTITY) {
-                return LoginResult.successTeacher();
-            }
+            int identity = loginService.getIdentity(number);
+            return LoginResult.success(identity);
         }
-        return LoginResult.error();
+        int identity = 0;
+        return LoginResult.error(identity);
     }
 
     /**
@@ -52,8 +48,13 @@ public class LogInController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Result register(@RequestParam("number") String number,
                            @RequestParam("password") String password,
+                           @RequestParam("name") String name,
+                           @RequestParam("college") String college,
+                           @RequestParam("major") String major,
+                           @RequestParam("email") String email,
+                           @RequestParam("tel") String tel,
                            @RequestParam("identity") int identity) throws IOException{
-        if(loginService.addUser(number, password, identity))
+        if(loginService.addUser(number, password, name, college, major, email, tel, identity))
             return Result.success();
         return Result.error();
     }

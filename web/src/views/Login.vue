@@ -58,7 +58,35 @@ export default defineComponent({
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
-          this.$router.replace('/student')
+          var params = new URLSearchParams();
+          params.append("number", this.loginForm.number);
+          params.append("password", this.loginForm.password);
+          var params2 = new URLSearchParams();
+          params2.append("number", this.loginForm.number);
+          this.$axios({
+            method: "post",
+            url: '/api/login',
+            data: params
+          }).then(res => {
+            if(res.data['success']==true){
+              if(res.data['data']==1){
+                // this.$axios({
+                //   method: "post",
+                //   url: '/api/studentCourses',
+                //   data: params2
+                // }).then(res => {
+                //   this.$router.replace('/student')
+                //   console.log(res.data)
+                // });
+                this.$router.replace('/student')
+              }else if(res.data['data']==2){
+                this.$router.replace('/teacher')
+              }
+            }else{
+              alert(res.data['msg']);
+            }
+          });
+
           var courses=[];
           courses.push({
             courseId: 1,

@@ -1,14 +1,20 @@
 module.exports = {
-    devServer:{
-        proxy:{
-            '':{
-                target:'http://localhost:8080',
-                changeOrigin:true,
-                ws:false,
-                pathRewrite:{
-                    '':''
+    devServer: {
+        open: true,
+        host: 'localhost',
+        port: 8080,
+        https: false,
+        // hotOnly: false,
+        proxy: { //配置跨域
+            '/api':{
+                target: 'http://localhost:8888/',
+                changOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    '^/api': ''
                 }
             }
-        }
+        },
+        before: app => { }
     }
 }

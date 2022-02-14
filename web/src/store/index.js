@@ -5,6 +5,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    // 数据库中存在的所有课程
+    allCourses: [
+      {
+        courseId: '01',
+        courseName: "敏捷开发1",
+        number: "Mr.Shao",
+      },
+      {
+        courseId: '02',
+        courseName: "敏捷开发2",
+        number: "Mr.Shao",
+      },
+    ],
     // 课程列表
     courses: [],
     // 选择进入详细课程界面的课程信息
@@ -42,6 +55,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    CHANGE_ALLCOURSES(state, payload){
+      state.allCourses = payload;
+    },
     CHANGE_COURSES(state, payload){
       state.courses = payload;
     },
