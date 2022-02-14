@@ -6,7 +6,7 @@
     <!--添加学生记录-->
     <insert id="addStudent" parameterType="com.study.backside.bean.Student">
         insert into student (number,name,college,major,e_mail,tel)
-        values (#{num}, #{nm}, #{clg}, #{mj}, #{em}, #{te})
+        values (#{number}, #{name}, #{college}, #{major}, #{email}, #{tel})
     </insert>
 
 </mapper>

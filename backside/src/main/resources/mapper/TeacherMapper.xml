@@ -13,7 +13,7 @@
     <!--添加教师记录-->
     <insert id="addTeacher" parameterType="com.study.backside.bean.Teacher">
         insert into teacher (number,name,college,e_mail,tel)
-        values (#{num}, #{nm}, #{clg}, #{em}, #{te})
+        values (#{number}, #{name}, #{college}, #{e_mail}, #{tel})
     </insert>
 
 </mapper>

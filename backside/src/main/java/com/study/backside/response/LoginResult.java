@@ -15,20 +15,22 @@ public class LoginResult {
     private int identity;
     private Object data;
 
-    public static LoginResult success(Object object) {
+    public static LoginResult success(int identity) {
         LoginResult loginresult = new LoginResult();
         loginresult.setCode(LRenum.SUCCESS_STUDENT.getCode());
         loginresult.setMsg(LRenum.SUCCESS_STUDENT.getMsg());
         loginresult.setSuccess(LRenum.SUCCESS_STUDENT.getSuccess());
-        loginresult.setData(object);
+        loginresult.setIdentity(identity);
+        //loginresult.setData(object);
         return loginresult;
     }
-    public static LoginResult error(Object object) {
+    public static LoginResult error(int identity) {
         LoginResult loginresult = new LoginResult();
         loginresult.setCode(LRenum.ERROR.getCode());
         loginresult.setMsg(LRenum.ERROR.getMsg());
         loginresult.setSuccess(LRenum.ERROR.getSuccess());
-        loginresult.setData(object);
+        loginresult.setIdentity(identity);
+        //loginresult.setData(object);
         return loginresult;
     }
     /*
