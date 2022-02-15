@@ -5,6 +5,7 @@
       <router-link to="/login">登录</router-link> |
       <router-link to="/register">注册</router-link> |
       <router-link to="/student">学生</router-link> |
+      <router-link to="/teacher">教师</router-link> |
       <router-link to="/studentcourse">课程</router-link>
     </div>
     <router-view/>

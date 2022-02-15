@@ -54,15 +54,32 @@ export default defineComponent({
       this.$router.replace('/studentcourse')
     },
     joinCourse(formName){
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-          // this.$router.replace('/student')
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
+      if (this.$store.state.isUp==false){
+        alert('请先登录!');
+        this.$router.replace('/login')
+      }else{
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            var params = new URLSearchParams();
+            params.append("courseId", this.$store.state.chooseCourseId);
+            params.append("number", this.$store.state.number);
+            params.append("courseCode", this.joinForm.code);
+            this.$axios({
+              method: "post",
+              url: '/api/chooseCourse',
+              data: params
+            }).then(res => {
+              alert(res.data['msg'])
+            });
+            
+            // this.$router.replace('/student')
+          } else {
+            console.log('选课码为空!');
+            return false;
+          }
+        });
+      }
+      
     },
 
   },

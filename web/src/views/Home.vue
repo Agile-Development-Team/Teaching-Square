@@ -37,16 +37,29 @@ export default {
       activeNames: '',
     }
   },
+  mounted:function () {
+    this.getCourses();
+  },
   methods: {
     getCourses(){
       console.log(this)
-      this.$axios.get('http://localhost:8888/allCourses').then(res => {
-        alert("请求成功，response=" + res.data);
+      this.$axios.get('http://localhost:8888/course').then(res => {
         // data = res.data;
+        var allCourses=[]
+        for(var course in res.data){
+          console.log(res.data[course]['courseId'])
+          allCourses.push({
+            courseId: res.data[course]['courseId'],
+            courseName: res.data[course]['courseName'],
+            teacherName: res.data[course]['teacherName']
+          })
+        }
+        this.$store.commit("CHANGE_ALLCOURSES", allCourses);
         console.log(res);
       });
     },
     handleChange(val) {
+      this.$store.commit("CHANGE_CHOOSECOURSEID", val);
       console.log(val);
     }
   }

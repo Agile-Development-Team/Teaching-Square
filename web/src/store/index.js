@@ -6,18 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // 数据库中存在的所有课程
-    allCourses: [
-      {
-        courseId: '01',
-        courseName: "敏捷开发1",
-        number: "Mr.Shao",
-      },
-      {
-        courseId: '02',
-        courseName: "敏捷开发2",
-        number: "Mr.Shao",
-      },
-    ],
+    allCourses: [],
+    // 用户是否登录
+    isUp: false,
+    // 登录用户的账号
+    number: '',
+    // 用户身份，1为学生，2为教师
+    identity: 0,
+    // 选课的课程ID
+    chooseCourseId: 0,
     // 课程列表
     courses: [],
     // 选择进入详细课程界面的课程信息
@@ -57,6 +54,18 @@ export default new Vuex.Store({
   mutations: {
     CHANGE_ALLCOURSES(state, payload){
       state.allCourses = payload;
+    },
+    CHANGE_ISUP(state, payload){
+      state.isUp = payload;
+    },
+    CHANGE_NUMBER(state, payload){
+      state.number = payload;
+    },
+    CHANGE_IDENTITY(state, payload){
+      state.identity = payload;
+    },
+    CHANGE_CHOOSECOURSEID(state, payload){
+      state.chooseCourseId = payload;
     },
     CHANGE_COURSES(state, payload){
       state.courses = payload;
