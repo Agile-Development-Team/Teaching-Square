@@ -1,7 +1,7 @@
 <template>
   <div class="student-course">
     <div class="title">
-      {{this.$store.state.selectCourse['courseName']}} {{this.$store.state.selectCourse['number']}}
+      {{this.$store.state.selectCourse['courseName']}} {{this.$store.state.selectCourse['teacherName']}}
     </div>
     <el-tabs
       tab-position="left" 

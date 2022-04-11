@@ -23,9 +23,9 @@
     >
       <el-col>
         <el-button 
-          @click="handleCourse(index['courseId'],index['courseName'],index['number'])" 
+          @click="handleCourse(index['courseId'],index['courseName'],index['teacherName'])" 
           class="course-btn"
-          >{{index['courseId']}} {{index['courseName']}} {{index['number']}}
+          >{{index['courseId']}} {{index['courseName']}} {{index['teacherName']}}
         </el-button>
       </el-col>
     </el-row>
@@ -56,25 +56,16 @@ export default defineComponent({
     }
   },
   methods: {
-    handleCourse(courseId, courseName, number){
+    handleCourse(courseId, courseName, teacherName){
       var course = {
         courseId: courseId,
         courseName: courseName,
-        number: number
+        teacherName: teacherName
       }
       this.$store.commit("CHANGE_SELECTCOURSE", course);
+      
+
       this.$router.replace('/studentcourse')
-    },
-    joinCourse(formName){
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-          // this.$router.replace('/student')
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
     },
 
   }

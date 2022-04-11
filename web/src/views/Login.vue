@@ -55,51 +55,51 @@ export default defineComponent({
   },
   methods:{
     handleLogin(formName) {
+      console.log('111')
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          console.log('222')
           // alert('submit!');
           var params = new URLSearchParams();
           params.append("number", this.loginForm.number);
           params.append("password", this.loginForm.password);
-          var params2 = new URLSearchParams();
-          params2.append("number", this.loginForm.number);
           this.$axios({
             method: "post",
             url: '/api/login',
             data: params
           }).then(res => {
+            console.log('333')
             if(res.data['success']==true){
-              if(res.data['data']==1){
-                // this.$axios({
-                //   method: "post",
-                //   url: '/api/studentCourses',
-                //   data: params2
-                // }).then(res => {
-                //   this.$router.replace('/student')
-                //   console.log(res.data)
-                // });
-                this.$router.replace('/student')
-              }else if(res.data['data']==2){
+              this.$store.commit("CHANGE_ISUP", true);
+              this.$store.commit("CHANGE_IDENTITY", res.data['identity']);
+              console.log('444')
+              console.log(res.data)
+              if(res.data['identity']==1){
+                console.log('555')
+                this.$axios.get('/api/studentCourses',{params:
+                  {number: this.loginForm.number}}
+                ).then(res=>{
+                  console.log('666')
+                  this.$router.replace('/student')
+                  var courses=[]
+                  for(var course in res.data){
+                    console.log(res.data[course]['courseId'])
+                    courses.push({
+                      courseId: res.data[course]['courseId'],
+                      courseName: res.data[course]['courseName'],
+                      teacherName: res.data[course]['teacherName']
+                    })
+                  }
+                  this.$store.commit("CHANGE_COURSES", courses);
+                });
+              }else if(res.data['identity']==2){
                 this.$router.replace('/teacher')
               }
             }else{
+              console.log('000')
               alert(res.data['msg']);
             }
           });
-
-          var courses=[];
-          courses.push({
-            courseId: 1,
-            courseName: "course1",
-            number: "teacherA"
-          })
-          courses.push({
-            courseId: 2,
-            courseName: "course2",
-            number: "teacherB"
-          })
-          this.$store.commit("CHANGE_COURSES", courses);
-          console.log(this.$store.state.courses)
         } else {
           console.log('error submit!!');
           return false;
