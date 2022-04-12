@@ -1,6 +1,9 @@
 package com.study.backside.bean;
 
-public class Resource {
+import lombok.Data;
+
+@Data
+public class Powerpoint {
     private int courseId;
     private int pptId;
     private String pptTitle;

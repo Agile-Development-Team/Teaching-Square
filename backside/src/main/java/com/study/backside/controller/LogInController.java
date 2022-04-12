@@ -1,6 +1,9 @@
 package com.study.backside.controller;
 
+import com.study.backside.response.LRenum;
+import com.study.backside.response.Renum;
 import com.study.backside.util.IdentityVO;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 import com.study.backside.response.LoginResult;
 import com.study.backside.response.Result;
@@ -34,13 +37,19 @@ public class LogInController {
     @CrossOrigin(origins = "*")
     //@PostMapping("/login")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public LoginResult login(@RequestParam("number") String number, @RequestParam("password") String password) throws IOException {
-        if (loginService.isLogin(number, password)) {
-            int identity = loginService.getIdentity(number);
-            return LoginResult.success(identity);
+    public LoginResult login(@RequestParam("number") String number, @RequestParam("password") String password){
+        try {
+            if (loginService.isLogin(number, password)) {
+                int identity = loginService.getIdentity(number);
+                return LoginResult.success(identity);
+            }
+            int identity = 0;
+            return LoginResult.error(identity);
+        }catch (DataAccessException e){
+            logger.error("/login error");
         }
-        int identity = 0;
-        return LoginResult.error(identity);
+        //待修改
+        return LoginResult.error(0);
     }
 
     /**
@@ -55,8 +64,13 @@ public class LogInController {
                            @RequestParam("email") String email,
                            @RequestParam("tel") String tel,
                            @RequestParam("identity") int identity) throws IOException{
-        if(loginService.addUser(number, password, name, college, major, email, tel, identity))
-            return Result.success();
+        try {
+            if (loginService.addUser(number, password, name, college, major, email, tel, identity))
+                return Result.success();
+            return Result.error();
+        }catch (DataAccessException e){
+            logger.error("/register error");
+        }
         return Result.error();
     }
 

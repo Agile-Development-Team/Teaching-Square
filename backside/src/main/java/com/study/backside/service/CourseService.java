@@ -1,21 +1,17 @@
 package com.study.backside.service;
 
-import com.study.backside.bean.Course;
-import com.study.backside.bean.Homework;
-import com.study.backside.bean.Teacher;
-import com.study.backside.bean.TestCourse;
-import com.study.backside.mapper.CourseMapper;
-import com.study.backside.mapper.HomeworkMapper;
-import com.study.backside.mapper.TeacherMapper;
-import com.study.backside.response.CoursesRes;
-import com.study.backside.response.HomeworkRes;
-import com.study.backside.response.Result;
+import com.study.backside.bean.*;
+import com.study.backside.mapper.*;
+import com.study.backside.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +24,15 @@ public class CourseService {
     @Resource
     private TeacherMapper teacherMapper;
     @Resource
+    private StudentMapper studentMapper;
+    @Resource
+    private PowerpointMapper powerpointMapper;
+    @Resource
     private HomeworkMapper homeworkMapper;
 
-    private Logger log = LoggerFactory.getLogger("CourseService");
+    public Logger log = LoggerFactory.getLogger("CourseService");
 
-    public List<CoursesRes> getAllCourses(){
+    public List<CoursesRes> getAllCourses() throws DataAccessException {
         List<Course> courses = courseMapper.getAllCourses();
         List<CoursesRes> res = new ArrayList<>();
         for(Course co:courses){
@@ -43,7 +43,7 @@ public class CourseService {
         return res;
     }
 
-    public List<CoursesRes> getStudentCourses(String number) {
+    public List<CoursesRes> getStudentCourses(String number) throws DataAccessException{
           List<Integer> courseIds = courseMapper.getCourseIdByStudentId(number);
           List<CoursesRes> res = new ArrayList<>();
         for(int courseId:courseIds){
@@ -55,7 +55,7 @@ public class CourseService {
         return res;
     }
 
-    public Result chooseCourse(String number,int courseId, String courseCode){
+    public Result chooseCourse(String number,int courseId, String courseCode) throws DataAccessException{
         Course co = courseMapper.getCourseByIdAndCode(courseId,courseCode);
         if(co==null){
             return new Result(400,false,"选课失败");
@@ -71,7 +71,30 @@ public class CourseService {
 
     }
 
-    /*public List<HomeworkRes> getAllHomeworks(String number, int courseId) throws IOException {
+    public List<ResourceRes> getCourseResources(int courseId) throws DataAccessException{
+        List<Powerpoint> resourceList = powerpointMapper.getCourseResources(courseId);
+        List<ResourceRes> res = new ArrayList<>();
+        for(Powerpoint re:resourceList){
+            res.add(new ResourceRes(re.getPptId(),re.getPptTitle(),re.getPublishedTime(),re.getLink()));
 
-    }*/
+        }
+        return res;
+
+    }
+
+    public List<HomeworkStuRes> getStudentsOfOneHomework(int courseId,int homeworkId) throws DataAccessException{
+        List<StudentHomework> list = homeworkMapper.getStudentsOfHomework(courseId,homeworkId);
+        List<HomeworkStuRes> res = new ArrayList<>();
+        try {
+            for (StudentHomework sh : list) {
+                res.add(new HomeworkStuRes(studentMapper.getNameByNumber(sh.getNumber()), URLEncoder.encode(sh.getLink(), "UTF-8")));
+            }
+            return res;
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+
 }

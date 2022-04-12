@@ -9,4 +9,8 @@
         values (#{number}, #{name}, #{college}, #{major}, #{email}, #{tel})
     </insert>
 
+    <select id="getNameByNumber" resultType="java.lang.String">
+        SELECT name FROM student where number=#{number}
+    </select>
+
 </mapper>
