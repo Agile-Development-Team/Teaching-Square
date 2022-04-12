@@ -90,13 +90,13 @@ public class LoginService {
                 e.printStackTrace();
                 log.error("add student error");
             }
-            if (identity == IdentityUtil.TEACHER_IDENTITY) {  //添加老师
-                try {
-                    i = teacherMapper.addTeacher(number, name, college, email, tel);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    log.error("add teacher error");
-                }
+        }
+        if (identity == IdentityUtil.TEACHER_IDENTITY) {  //添加老师
+            try {
+                i = teacherMapper.addTeacher(number, name, college, email, tel);
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error("add teacher error");
             }
         }
         return i == 1 ? true : false;

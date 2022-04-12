@@ -100,13 +100,13 @@ public class CourseController {
 
 
     /**
-     * 课程作业列表
+     * 返回课程作业列表
      */
-    /*@CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/courseHomeworks", method = RequestMethod.GET)
     public List<HomeworkRes> getStudentHomeworks(@RequestParam(value = "number") String number,
                                                  @RequestParam(value = "courseId") int courseId){
         return courseService.getAllHomeworks(number, courseId);
-    }*/
+    }
 
 }

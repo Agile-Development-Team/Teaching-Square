@@ -32,7 +32,7 @@
         SELECT link FROM student_homework where course_id=#{courseId}
     </select>
     <select id="getScoreByNumberAndCourseIdAndHomeworkId" resultType="java.lang.Double">
-        SELECT grade FROM student_homework where course_id=#{courseId}
+        SELECT grade FROM student_homework where course_id=#{courseId} and number=#{number} and homework_id=#{homeworkId}
     </select>
 
     <select id="getStudentsOfHomework" resultType="com.study.backside.bean.StudentHomework">

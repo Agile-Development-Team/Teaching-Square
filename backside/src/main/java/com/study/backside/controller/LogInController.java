@@ -73,7 +73,9 @@ public class LogInController {
                            @RequestParam("tel") String tel,
                            @RequestParam("identity") int identity) throws IOException{
         try {
-            if (loginService.addUser(number, password, name, college, major, email, tel, identity))
+            Boolean i = false;
+            i=loginService.addUser(number, password, name, college, major, email, tel, identity);
+            if (i)
                 return Result.success();
             return Result.error();
         }catch (DataAccessException e){
