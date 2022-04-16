@@ -6,24 +6,16 @@ package com.study.backside.response;
  * @Date 2022/2/13 21:04
  */
 public class HomeworkRes {
-    private int courseId;
     private int homeworkId;
     private String homeworkTitle;
-    private String description;
     private String deadline;
-    private int percentage;
+    private double score;
 
-    public HomeworkRes(int cId, int hId, String hTitle, String des, String ddl, int per){
-        this.courseId = cId;
+    public HomeworkRes(int hId, String hTitle, String ddl, double sc){
         this.homeworkId = hId;
         this.homeworkTitle = hTitle;
-        this.description = des;
         this.deadline = ddl;
-        this.percentage = per;
-    }
-
-    public int getCourseId() {
-        return courseId;
+        this.score = sc;
     }
 
     public int getHomeworkId() {
@@ -34,20 +26,8 @@ public class HomeworkRes {
         return homeworkTitle;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public String getDeadline() {
         return deadline;
-    }
-
-    public int getPercentage() {
-        return percentage;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
     }
 
     public void setHomeworkId(int homeworkId) {
@@ -58,15 +38,15 @@ public class HomeworkRes {
         this.homeworkTitle = homeworkTitle;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

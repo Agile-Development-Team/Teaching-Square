@@ -98,6 +98,7 @@ public class CourseService {
         return res;
     }
 
+
     public void addCourse(Course co) throws DataAccessException{
         courseMapper.addCourse(co);
 
@@ -133,6 +134,28 @@ public class CourseService {
         return res;
 
 
+    }
+
+
+    public List<HomeworkRes> getAllHomeworks(String number, int courseId) throws DataAccessException {
+
+        List<Homework> homeworks = homeworkMapper.getHomeworksByCourseId(courseId);
+        List<HomeworkRes> res = new ArrayList<>();
+        for(Homework hw : homeworks){
+            int homeworkId = hw.getHomeworkId();
+            double score = homeworkMapper.getScoreByNumberAndCourseIdAndHomeworkId(number, courseId, homeworkId);
+            HomeworkRes temp = new HomeworkRes(homeworkId, hw.getHomeworkTitle(), hw.getDeadline(), score);
+            res.add(temp);
+        }
+        return res;
+    }
+
+    public  HomeworkDetailRes getHomeworkDetails(String number, int courseId, int homeworkId) throws DataAccessException{
+        List<Homework> homeworks = homeworkMapper.getHomeworkByCourseIdAndHomeworkId(courseId, homeworkId);
+        Homework hw = homeworks.get(0);
+        String link = homeworkMapper.getLinkByNumberAndCourseIdAndHomeworkId(number, courseId, homeworkId);
+        HomeworkDetailRes temp = new HomeworkDetailRes(hw.getDescription(), hw.getDeadline(), link);
+        return temp;
     }
 
 

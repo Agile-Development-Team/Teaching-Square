@@ -41,15 +41,23 @@ public class LogInController {
         try {
             if (loginService.isLogin(number, password)) {
                 int identity = loginService.getIdentity(number);
-                return LoginResult.success(identity);
+                String name="";
+                if(identity==identityUtil.STUDENT_IDENTITY){
+                    name=loginService.getStudentName(number);
+                }
+                else if(identity==identityUtil.TEACHER_IDENTITY){
+                    name=loginService.getTeacherName(number);
+                }
+                return LoginResult.success(identity, name);
             }
             int identity = 0;
-            return LoginResult.error(identity);
+            String name="";
+            return LoginResult.error(identity, name);
         }catch (DataAccessException e){
             logger.error("/login error");
         }
         //待修改
-        return LoginResult.error(0);
+        return LoginResult.error(0,"");
     }
 
     /**
@@ -65,7 +73,9 @@ public class LogInController {
                            @RequestParam("tel") String tel,
                            @RequestParam("identity") int identity) throws IOException{
         try {
-            if (loginService.addUser(number, password, name, college, major, email, tel, identity))
+            Boolean i = false;
+            i=loginService.addUser(number, password, name, college, major, email, tel, identity);
+            if (i)
                 return Result.success();
             return Result.error();
         }catch (DataAccessException e){

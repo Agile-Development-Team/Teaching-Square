@@ -20,4 +20,9 @@
         values (#{number}, #{name}, #{college}, #{e_mail}, #{tel})
     </insert>
 
+    <!--查找老师名字-->
+    <select id="getNameByNumber" resultType="java.lang.String">
+        SELECT name FROM teacher where number=#{number}
+    </select>
+
 </mapper>
