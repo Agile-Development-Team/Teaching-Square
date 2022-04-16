@@ -17,6 +17,10 @@ public interface CourseMapper {
     Course getCourseById(int courseId) throws DataAccessException;
     Course getCourseByIdAndCode(int courseId,String courseCode) throws DataAccessException;
     int addStudentCourse(String number,int courseId) throws DataAccessException;
+    void addCourse(Course co) throws DataAccessException;
+    int getMaxCourseId() throws DataAccessException;
+    int addTeacherCourse(String number,int courseId) throws DataAccessException;
+    List<Course> getCourseByTeacherNumber(String number) throws DataAccessException;
 
 
 

@@ -19,4 +19,7 @@ public interface HomeworkMapper {
     String getLinkByNumberAndCourseIdAndHomeworkId(String number, int courseId, int homeworkId) throws DataAccessException;
     Double getScoreByNumberAndCourseIdAndHomeworkId(String number, int courseId, int homeworkId) throws DataAccessException;
     List<StudentHomework> getStudentsOfHomework(int courseId,int homeworkId) throws DataAccessException;
+    int addHomework(Homework hw) throws DataAccessException;
+    int getMaxHomeworkCount(int courseId) throws DataAccessException;
+
 }

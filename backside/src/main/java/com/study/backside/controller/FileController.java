@@ -30,7 +30,7 @@ public class FileController {
 
     private Logger log = LoggerFactory.getLogger("FileController");
 
-    // 文件上传 （只能单文件上传）
+    // 上传作业
     @CrossOrigin(origins = "*")
     @PostMapping("/uploadHomework")
     public Result fileUploads(@RequestParam("file") MultipartFile file,
@@ -58,6 +58,22 @@ public class FileController {
 
     }
     */
+
+    // 发布课程资源
+    @CrossOrigin(origins = "*")
+    @PostMapping("/addResource")
+    public Result uploadResource(@RequestParam("courseId") int courseId,
+                                 @RequestParam("title") String title,
+                                 @RequestParam("file") MultipartFile file){
+        try {
+            return fileService.uploadResource(courseId,title,file);
+        }catch (DataAccessException e){
+            log.error("/file/addResource");
+            log.error(e.getMessage());
+        }
+        return new Result(500,false,"访问数据库失败");
+
+    }
 
 
 //    //下载文件

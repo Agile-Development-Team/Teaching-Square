@@ -1,5 +1,8 @@
 package com.study.backside.controller;
 
+import com.study.backside.bean.Course;
+import com.study.backside.bean.Homework;
+import com.study.backside.request.AddCourseRe;
 import com.study.backside.request.ChooseCourseRe;
 import com.study.backside.response.*;
 import com.study.backside.service.CourseService;
@@ -61,9 +64,6 @@ public class CourseController {
             log.error("/chooseCourse error");
         }
         return new Result(500,false,"访问数据库失败");
-
-
-
     }
 
 
@@ -95,6 +95,59 @@ public class CourseController {
         }
         return null;
     }
+
+
+    //教师发布课程
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/addCourse", method = RequestMethod.POST)
+    public @ResponseBody
+    Result addCourse(@RequestBody AddCourseRe re){
+        try {
+            courseService.addCourse(new Course(re.getCourseName(),re.getCourseCode()));
+            //System.out.println("courseId "+courseId);
+            return courseService.addTeacherCourse(re.getNumber());
+        }catch (DataAccessException e){
+            log.error("/addCourse error");
+            log.error(e.getMessage());
+        }
+        return new Result(500,false,"访问数据库失败");
+    }
+
+    //教师发布作业
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/addHomework", method = RequestMethod.POST)
+    public @ResponseBody
+    Result addHomework(@RequestBody Homework hw){
+        try {
+            return courseService.addHomework(hw);
+        }catch (DataAccessException e){
+            log.error("/addHomework error");
+            e.printStackTrace();
+        }
+        return new Result(500,false,"访问数据库失败");
+    }
+
+
+    /**
+     * 查看教师发布的课程
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/teacherCourses", method = RequestMethod.GET)
+    public @ResponseBody
+    List<TeacherCourseRes> getTeacherCourses(@RequestParam(value = "number") String number){
+        try {
+            return courseService.getTeacherCourses(number);
+        }catch (DataAccessException e){
+            log.error("/searchHomeworkStudents error");
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
+
+
+
+
 
 
 

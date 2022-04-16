@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 @Slf4j
@@ -20,7 +23,7 @@ public class CommonUploadAndDownloadUtil {
      */
 
     //主目录
-    private String filePath = System.getProperty("user.dir");
+    private static String filePath = System.getProperty("user.dir");
     public static void downLoad(HttpServletResponse response, String downloadUrl){
         if (Objects.isNull(downloadUrl)) {
             // 如果接收参数为空记录错误
@@ -109,6 +112,23 @@ public class CommonUploadAndDownloadUtil {
         }
 
 
+
+    }
+
+    //项目开始运行时创建student_homework和powerpoint两个文件夹
+    public static void createDir(){
+        try {
+            String path1 = filePath + "\\src\\main\\resources\\student_homework";
+            Path path = Paths.get(path1);
+            Files.createDirectories(path);
+            String path2 = filePath + "\\src\\main\\resources\\powerpoint";
+            path = Paths.get(path2);
+            Files.createDirectories(path);
+
+        }catch (IOException e){
+            log.error("/创建初始文件夹失败");
+
+        }
 
     }
 }

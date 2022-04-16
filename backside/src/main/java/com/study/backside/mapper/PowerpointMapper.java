@@ -9,5 +9,7 @@ import java.util.List;
 
 public interface PowerpointMapper {
     List<Powerpoint> getCourseResources(int courseId) throws DataAccessException;
+    int getResourcesCount(int courseId) throws DataAccessException;
+    int addResource(Powerpoint ppt) throws DataAccessException;
 
 }

@@ -1,6 +1,8 @@
 package com.study.backside.service;
 
+import com.study.backside.bean.Powerpoint;
 import com.study.backside.mapper.HomeworkMapper;
+import com.study.backside.mapper.PowerpointMapper;
 import com.study.backside.response.Result;
 import com.study.backside.util.CommonUploadAndDownloadUtil;
 import org.slf4j.Logger;
@@ -27,6 +29,8 @@ public class FileService {
 
     @Resource
     private HomeworkMapper homeworkMapper;
+    @Resource
+    private PowerpointMapper powerpointMapper;
     public Result uploadHomework(String number,int courseId,int homeworkId,MultipartFile file) throws DataAccessException {
 
         // 获取上传的文件名称
@@ -60,6 +64,30 @@ public class FileService {
         }
 
 
+
+    }
+    public Result uploadResource(int courseId,String title,MultipartFile file) throws DataAccessException{
+        int cnt = powerpointMapper.getResourcesCount(courseId);
+        int pptId = cnt+1;
+        // 获取上传的文件名称
+        String fileName = file.getOriginalFilename();
+        // 课程id和pptId拼接
+        String newFileName = courseId+"_"+pptId+"_"+fileName;
+        // 得到文件保存的位置以及新文件名
+        String destPath = filePath + "resources\\powerpoint"+ File.separator+newFileName;
+
+        //存放文件
+        CommonUploadAndDownloadUtil.upload(destPath,file);
+        //存放至数据库
+        Date currentDate = new Date();
+        SimpleDateFormat  SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+
+        int res = powerpointMapper.addResource(new Powerpoint(courseId,pptId,title,SimpleDateFormat.format(currentDate.getTime()),destPath));
+        if(res==1) {
+            return new Result(200, true, "上传成功");
+        }
+        return new Result(400, false, "上传失败");
 
     }
 

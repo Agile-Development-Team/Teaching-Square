@@ -10,6 +10,7 @@
         SELECT course_id FROM student_course where number=#{number}
     </select>
 
+
     <select id="getCourseById" resultType="com.study.backside.bean.Course">
         SELECT * FROM course where course_id=#{courseId}
     </select>
@@ -23,6 +24,32 @@
         insert into student_course (number,course_id)
           values (#{number}, #{courseId})
     </insert>
+
+    <!--发布一门新课程-->
+    <insert id="addCourse"  parameterType="com.study.backside.bean.Course">
+        insert into course (course_name,code)
+          values (#{courseName}, #{code})
+    </insert>
+
+    <select id="getMaxCourseId" resultType="java.lang.Integer">
+        SELECT max(course_id) FROM course
+    </select>
+
+    <!--添加教师课程记录-->
+    <insert id="addTeacherCourse" parameterType="com.study.backside.bean.TeacherCourse">
+        insert into teacher_course (number,course_id)
+          values (#{number}, #{courseId})
+    </insert>
+
+    <select id="getCourseByTeacherNumber" resultType="com.study.backside.bean.Course">
+        SELECT * FROM course where course_id in(
+        select course_id from teacher_course where number=#{number}
+        )
+    </select>
+
+
+
+
 
 
 </mapper>

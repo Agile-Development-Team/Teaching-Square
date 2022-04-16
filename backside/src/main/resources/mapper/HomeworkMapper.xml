@@ -39,6 +39,16 @@
         SELECT * FROM student_homework where course_id=#{courseId} and homework_id=#{homeworkId}
     </select>
 
+    <select id="getMaxHomeworkCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT count(homework_id) FROM homework where course_id=#{courseId}
+    </select>
+
+    <!--发布课程作业-->
+    <insert id="addHomework"  parameterType="com.study.backside.bean.Homework">
+        insert into homework (homework_id,course_id,homework_title,description,deadline,percentage)
+          values (#{homeworkId}, #{courseId}, #{homeworkTitle}, #{description}, #{deadline}, #{percentage})
+    </insert>
+
 
 
 

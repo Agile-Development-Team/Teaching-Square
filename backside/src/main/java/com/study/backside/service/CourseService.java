@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,8 @@ public class CourseService {
         List<Powerpoint> resourceList = powerpointMapper.getCourseResources(courseId);
         List<ResourceRes> res = new ArrayList<>();
         for(Powerpoint re:resourceList){
-            res.add(new ResourceRes(re.getPptId(),re.getPptTitle(),re.getPublishedTime(),re.getLink()));
+            String time = new SimpleDateFormat("yyyy-MM-dd").format(re.getPublishedTime());
+            res.add(new ResourceRes(re.getPptId(),re.getPptTitle(),time,re.getLink()));
 
         }
         return res;
@@ -94,6 +96,43 @@ public class CourseService {
             e.printStackTrace();
         }
         return res;
+    }
+
+    public void addCourse(Course co) throws DataAccessException{
+        courseMapper.addCourse(co);
+
+
+    }
+
+    public Result addTeacherCourse(String number) throws DataAccessException{
+        int courseId = courseMapper.getMaxCourseId();
+        int i = courseMapper.addTeacherCourse(number,courseId);
+        if(i==1){
+            return new Result(200,true,"发布课程成功");
+        }
+        return new Result(400,false,"发布课程失败");
+    }
+
+    public Result addHomework(Homework hw) throws DataAccessException{
+        int homeworkId = homeworkMapper.getMaxHomeworkCount(hw.getCourseId())+1;
+        hw.setHomeworkId(homeworkId);
+        int i = homeworkMapper.addHomework(hw);
+        if(i==1){
+            return new Result(200,true,"发布作业成功");
+        }
+        return new Result(400,false,"发布作业失败");
+    }
+
+    public List<TeacherCourseRes> getTeacherCourses(String number) throws DataAccessException{
+        String tName = teacherMapper.getTeacherNameByNumber(number);
+        List<Course> cos = courseMapper.getCourseByTeacherNumber(number);
+        List<TeacherCourseRes> res = new ArrayList<>();
+        for(Course co:cos){
+            res.add(new TeacherCourseRes(co.getCourseName(),co.getCourseId(),tName));
+        }
+        return res;
+
+
     }
 
 
