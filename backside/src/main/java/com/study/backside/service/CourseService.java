@@ -59,15 +59,16 @@ public class CourseService {
     public Result chooseCourse(String number,int courseId, String courseCode) throws DataAccessException{
         Course co = courseMapper.getCourseByIdAndCode(courseId,courseCode);
         if(co==null){
-            return new Result(400,false,"选课失败");
+            return new Result(400,false,"选课码错误或没有这门课程");
         }
         int i=0;
         try{
             i = courseMapper.addStudentCourse(number,courseId);
         }catch (Exception e){
             log.error("add student_course error");
+            log.error(e.getMessage());
         }
-        return i==1?new Result(200,true,"选课成功"):new Result(400,false,"选课失败");
+        return i==1?new Result(200,true,"选课成功"):new Result(400,false,"重复选课");
 
 
     }
@@ -93,7 +94,8 @@ public class CourseService {
             }
             return res;
         }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
+            log.error("CourseService getStudentOfOneHomework error");
+            log.error(e.getMessage());
         }
         return res;
     }

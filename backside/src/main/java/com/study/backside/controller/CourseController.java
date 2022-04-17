@@ -26,7 +26,9 @@ public class CourseController {
 
     private Logger log = LoggerFactory.getLogger("CourseController");
 
-
+    /**
+     * 查看当前发布的所有课程
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/course", method = RequestMethod.GET)
     public @ResponseBody
@@ -35,11 +37,15 @@ public class CourseController {
             return courseService.getAllCourses();
         }catch (DataAccessException e){
             log.error("/course error");
+            log.error(e.getMessage());
         }
         return new Result(500,false,"访问数据库失败");
 
     }
 
+    /**
+     * 查看学生选的课程
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/studentCourses", method = RequestMethod.GET)
     public @ResponseBody
@@ -48,12 +54,15 @@ public class CourseController {
             return courseService.getStudentCourses(number);
         }catch (DataAccessException e){
             log.error("/studentCourses error");
+            log.error(e.getMessage());
         }
         return null;
 
     }
 
-    //学生选课
+    /**
+     * 学生选课
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/chooseCourse", method = RequestMethod.POST)
     public @ResponseBody
@@ -62,12 +71,15 @@ public class CourseController {
             return courseService.chooseCourse(re.getNumber(), re.getCourseId(), re.getCourseCode());
         }catch (DataAccessException e){
             log.error("/chooseCourse error");
+            log.error(e.getMessage());
         }
         return new Result(500,false,"访问数据库失败");
     }
 
 
-    //获取课程资源
+    /**
+     * 获取课程资源
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/courseResources", method = RequestMethod.GET)
     public @ResponseBody
@@ -76,6 +88,7 @@ public class CourseController {
             return courseService.getCourseResources(courseId);
         }catch (DataAccessException e){
             log.error("/courseResources error");
+            log.error(e.getMessage());
         }
         return null;
     }
@@ -92,12 +105,15 @@ public class CourseController {
             return courseService.getStudentsOfOneHomework(courseId, homeworkId);
         }catch (DataAccessException e){
             log.error("/searchHomeworkStudents error");
+            log.error(e.getMessage());
         }
         return null;
     }
 
 
-    //教师发布课程
+    /**
+     * 教师发布课程
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/addCourse", method = RequestMethod.POST)
     public @ResponseBody
@@ -113,7 +129,9 @@ public class CourseController {
         return new Result(500,false,"访问数据库失败");
     }
 
-    //教师发布作业
+    /**
+     * 教师发布作业
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/addHomework", method = RequestMethod.POST)
     public @ResponseBody
@@ -122,7 +140,7 @@ public class CourseController {
             return courseService.addHomework(hw);
         }catch (DataAccessException e){
             log.error("/addHomework error");
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return new Result(500,false,"访问数据库失败");
     }
@@ -163,6 +181,7 @@ public class CourseController {
             return courseService.getAllHomeworks(number, courseId);
         } catch (DataAccessException e) {
             log.error("/courseHomeworks error");
+            log.error(e.getMessage());
         }
         return null;
     }
@@ -179,6 +198,7 @@ public class CourseController {
             return courseService.getHomeworkDetails(number, courseId, homeworkId);
         } catch (Exception e) {
             log.error("/homeworkDetail error");
+            log.error(e.getMessage());
         }
         return null;
     }
