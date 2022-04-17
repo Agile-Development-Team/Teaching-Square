@@ -1,8 +1,10 @@
 package com.study.backside.mapper;
 
 import com.study.backside.bean.User;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -13,8 +15,8 @@ import java.util.List;
 
 @Repository
 public interface UserMapper {
-    List<User> getAllUsers();
-    String getPasswordByNumber(String number);
-    int getIdentityByNumber(String number);
-    int addUser(String number, String password, int identity);
+    List<User> getAllUsers() throws DataAccessException;
+    String getPasswordByNumber(String number) throws DataAccessException;
+    int getIdentityByNumber(String number) throws DataAccessException;
+    int addUser(String number, String password, int identity) throws DataAccessException;
 }

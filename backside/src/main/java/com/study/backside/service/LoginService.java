@@ -6,6 +6,7 @@ import com.study.backside.mapper.UserMapper;
 import com.study.backside.util.IdentityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,12 +21,14 @@ import java.io.IOException;
 public class LoginService {
     @Resource
     private UserMapper userMapper;
+    @Resource
     private TeacherMapper teacherMapper;
+    @Resource
     private StudentMapper studentMapper;
 
     private Logger log = LoggerFactory.getLogger("LoginService");
 
-    public Boolean isLogin(String number, String password) throws IOException {
+    public Boolean isLogin(String number, String password) throws DataAccessException {
         /*String[] ns = number.split(",");
         String num = ns[1];
         String[] pws = password.split(",");
@@ -38,10 +41,21 @@ public class LoginService {
         return false;
     }
 
-    public int getIdentity(String number) throws IOException {
+    public int getIdentity(String number) throws DataAccessException{
         /*String[] ns = number.split(",");
         String num = ns[1];*/
         return userMapper.getIdentityByNumber(number);
+    }
+
+    public String getStudentName(String number) throws DataAccessException {
+        //return "st";
+        //return number;
+        return studentMapper.getNameByNumber(number);
+    }
+
+    public String getTeacherName(String number) throws DataAccessException {
+        //return "tea";
+        return teacherMapper.getNameByNumber(number);
     }
 
     public Boolean addUser(String number, String password, String name,
@@ -76,13 +90,13 @@ public class LoginService {
                 e.printStackTrace();
                 log.error("add student error");
             }
-            if (identity == IdentityUtil.TEACHER_IDENTITY) {  //添加老师
-                try {
-                    i = teacherMapper.addTeacher(number, name, college, email, tel);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    log.error("add teacher error");
-                }
+        }
+        if (identity == IdentityUtil.TEACHER_IDENTITY) {  //添加老师
+            try {
+                i = teacherMapper.addTeacher(number, name, college, email, tel);
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error("add teacher error");
             }
         }
         return i == 1 ? true : false;

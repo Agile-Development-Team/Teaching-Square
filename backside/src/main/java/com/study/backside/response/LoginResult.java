@@ -13,23 +13,29 @@ public class LoginResult {
     private boolean success;
     private String msg;
     private int identity;
+
+
+
+    private String name;
     private Object data;
 
-    public static LoginResult success(int identity) {
+    public static LoginResult success(int identity, String name) {
         LoginResult loginresult = new LoginResult();
         loginresult.setCode(LRenum.SUCCESS_STUDENT.getCode());
         loginresult.setMsg(LRenum.SUCCESS_STUDENT.getMsg());
         loginresult.setSuccess(LRenum.SUCCESS_STUDENT.getSuccess());
         loginresult.setIdentity(identity);
+        loginresult.setName(name);
         //loginresult.setData(object);
         return loginresult;
     }
-    public static LoginResult error(int identity) {
+    public static LoginResult error(int identity, String name) {
         LoginResult loginresult = new LoginResult();
         loginresult.setCode(LRenum.ERROR.getCode());
         loginresult.setMsg(LRenum.ERROR.getMsg());
         loginresult.setSuccess(LRenum.ERROR.getSuccess());
         loginresult.setIdentity(identity);
+        loginresult.setName(name);
         //loginresult.setData(object);
         return loginresult;
     }
@@ -67,5 +73,9 @@ public class LoginResult {
 
     public void setIdentity(int identity) {
         this.identity = identity;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -13,6 +13,8 @@ server:
   port: 8888
   servlet:
     context-path: /
+  tomcat:
+    uri-encoding: UTF-8
 spring:
   datasource:
     dricer-class-name: com.mysql.jdbc.Driver
@@ -25,6 +27,7 @@ spring:
       file-size-threshold: 2KB # 文件写入磁盘的阈值
       max-file-size: 100MB
       max-request-size: 215MB # 最大请求值大小
+
 
 #springboot整合mybatis
 mybatis:

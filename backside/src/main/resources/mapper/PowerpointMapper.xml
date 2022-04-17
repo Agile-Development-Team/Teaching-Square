@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.study.backside.mapper.PowerpointMapper">
+
+
+
+    <select id="getCourseResources" resultType="com.study.backside.bean.Powerpoint">
+        SELECT * FROM resource where course_id=#{courseId}
+    </select>
+
+    <select id="getResourcesCount" resultType="java.lang.Integer">
+        SELECT count(ppt_id) FROM resource where course_id=#{courseId}
+    </select>
+
+    <!--发布课程资源-->
+    <insert id="addResource"  parameterType="com.study.backside.bean.Powerpoint">
+        insert into resource (course_id,ppt_id,ppt_title,published_time,link)
+          values (#{courseId}, #{pptId}, #{pptTitle}, #{publishedTime}, #{link})
+    </insert>
+
+
+</mapper>

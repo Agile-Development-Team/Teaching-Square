@@ -18,8 +18,8 @@
 
 <script>
 // import { defineComponent } from '@vue/composition-api'
-import Courseware from '@/components/Courseware.vue'
-import Homework from '@/components/Homework.vue'
+import Courseware from '@/components/student/Courseware.vue'
+import Homework from '@/components/student/Homework.vue'
 export default({
   
   components: {

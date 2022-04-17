@@ -5,7 +5,7 @@ package com.study.backside.response;
  * @Classname
  * @Date 2022/2/13 20:12
  */
-public enum LRenum {
+public enum LRenum{
     SUCCESS_STUDENT(200,true,"成功",1),
     SUCCESS_TEACHER(200,true,"成功",2),
     ERROR(404,false,"数据出错",0);

@@ -47,7 +47,7 @@ export default new Vuex.Store({
       grade: '100分',
       description: '作业描述……',
       content: '作业内容……',
-      status: '0', // 0作业不可提交，1作业可提交
+      status: '0', // 0作业未提交，1作业已提交
       percentage: '5%',
     }
   },
@@ -76,12 +76,26 @@ export default new Vuex.Store({
     CHANGE_SELLECTCOURSEWARES(state, payload){
       state.selectCoursewares = payload;
     },
+    CHANGE_SELECTHOMEWORKS(state, payload){
+      state.selectHomeworks = payload;
+    },
     CHANGE_SHOWONEHOMEWORK(state, payload){
       state.showOneHomework = payload;
     },
     CHANGE_SELECTEDHOMEWORK(state, payload){
       state.selectedHomework = payload;
     },
+    CLEAR(state){
+      state.isUp=false;
+      state.number='';
+      state.identity=0;
+      state.chooseCourseId=0;
+      state.courses=[];
+      state.selectCourse={};
+      state.selectCoursewares=[];
+      // 为1展示作业列表，为2展示具体作业内容
+      state.showOneHomework='1'; 
+    }
   },
   actions: {
   },

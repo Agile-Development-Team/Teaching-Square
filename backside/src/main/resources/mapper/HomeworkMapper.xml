@@ -2,9 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.study.backside.mapper.HomeworkMapper">
 
-    <select id="uploadHomework" resultType="java.lang.Integer">
+    <insert id="uploadHomework">
         insert into student_homework (number, course_id, homework_id, link, grade)
         values (#{number}, #{courseId}, #{homeworkId}, #{link}, #{grade})
+    </insert>
+
+    <update id="updateHomework">
+        update student_homework set link=#{link},grade=#{grade}
+        where number=#{number} and course_id=#{courseId} and homework_id=#{homeworkId}
+    </update>
+
+    <select id="getStudentHomeworkById" resultType="java.lang.Integer">
+        SELECT course_id FROM student_homework where number=#{number} and course_id=#{courseId} and homework_id=#{homeworkId}
     </select>
 
     <select id="getCourseIdByStudentId" resultType="java.lang.Integer">
@@ -20,11 +29,33 @@
     </select>
 
     <select id="getLinkByNumberAndCourseIdAndHomeworkId" resultType="java.lang.String">
-        SELECT link FROM student_homework where course_id=#{courseId}
+        SELECT link FROM student_homework where course_id=#{courseId} and number=#{number} and homework_id=#{homeworkId}
     </select>
     <select id="getScoreByNumberAndCourseIdAndHomeworkId" resultType="java.lang.Double">
-        SELECT grade FROM student_homework where course_id=#{courseId}
+        SELECT grade FROM student_homework where course_id=#{courseId} and number=#{number} and homework_id=#{homeworkId}
     </select>
+
+    <select id="getStudentsOfHomework" resultType="com.study.backside.bean.StudentHomework">
+        SELECT * FROM student_homework where course_id=#{courseId} and homework_id=#{homeworkId}
+    </select>
+
+
+    <select id="getMaxHomeworkCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT count(homework_id) FROM homework where course_id=#{courseId}
+    </select>
+
+    <!--发布课程作业-->
+    <insert id="addHomework"  parameterType="com.study.backside.bean.Homework">
+        insert into homework (homework_id,course_id,homework_title,description,deadline,percentage)
+          values (#{homeworkId}, #{courseId}, #{homeworkTitle}, #{description}, #{deadline}, #{percentage})
+    </insert>
+
+
+
+    <select id="getHomeworkByCourseIdAndHomeworkId" resultType="com.study.backside.bean.Homework">
+        SELECT * FROM homework where course_id=#{courseId} and homework_id=#{homeworkId}
+    </select>
+
 
 
 </mapper>

@@ -10,10 +10,19 @@
         )
     </select>
 
+    <select id="getTeacherNameByNumber" resultType="java.lang.String">
+        select name from teacher where number=#{number}
+    </select>
+
     <!--添加教师记录-->
     <insert id="addTeacher" parameterType="com.study.backside.bean.Teacher">
         insert into teacher (number,name,college,e_mail,tel)
         values (#{number}, #{name}, #{college}, #{e_mail}, #{tel})
     </insert>
+
+    <!--查找老师名字-->
+    <select id="getNameByNumber" resultType="java.lang.String">
+        SELECT name FROM teacher where number=#{number}
+    </select>
 
 </mapper>
