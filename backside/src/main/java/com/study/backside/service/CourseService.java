@@ -77,8 +77,8 @@ public class CourseService {
         List<Powerpoint> resourceList = powerpointMapper.getCourseResources(courseId);
         List<ResourceRes> res = new ArrayList<>();
         for(Powerpoint re:resourceList){
-            String time = new SimpleDateFormat("yyyy-MM-dd").format(re.getPublishedTime());
-            res.add(new ResourceRes(re.getPptId(),re.getPptTitle(),time,re.getLink()));
+            //String time = new SimpleDateFormat("yyyy-MM-dd").format(re.getPublishedTime());
+            res.add(new ResourceRes(re.getPptId(),re.getPptTitle(),re.getPublishedTime(),re.getLink()));
 
         }
         return res;
