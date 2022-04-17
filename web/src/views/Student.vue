@@ -1,6 +1,6 @@
 <template>
   <div class="classInf">
-    <el-form
+    <!-- <el-form
       ref="joinForm"
       :inline="true" 
       class="demo-form-inline"
@@ -16,7 +16,7 @@
       <el-form-item>
         <el-button type="primary" @click="joinCourse('joinForm')">加入</el-button>
       </el-form-item>
-    </el-form>
+    </el-form> -->
     <el-row
       v-for="index in this.$store.state.courses"
       :key="index['courseId']"
@@ -63,9 +63,28 @@ export default defineComponent({
         teacherName: teacherName
       }
       this.$store.commit("CHANGE_SELECTCOURSE", course);
-      
 
-      this.$router.replace('/studentcourse')
+      
+      this.$axios.get('/api/courseHomeworks',{params:
+        {courseId: courseId,
+          number: this.$store.state.number}}
+      ).then(res=>{
+        var homeworks=[]
+        for(let i in res.data){
+          // console.log(res.data[i]);
+          // console.log(res.data[i]['score']);
+          homeworks.push({
+            homeworkId: res.data[i]['homeworkId'],
+            homeworkName: res.data[i]['homeworkTitle'],
+            deadline: res.data[i]['deadline'],
+            grade: res.data[i]['score']
+          })
+        }
+        console.log(homeworks)
+        this.$store.commit("CHANGE_SELECTHOMEWORKS", homeworks);
+        this.$router.replace('/studentcourse')
+      });
+
     },
 
   }
@@ -73,5 +92,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.classInf{
+  margin-top: 50px;
 
+}
 </style>

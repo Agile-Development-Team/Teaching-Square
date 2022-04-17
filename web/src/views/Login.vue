@@ -55,10 +55,8 @@ export default defineComponent({
   },
   methods:{
     handleLogin(formName) {
-      console.log('111')
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('222')
           // alert('submit!');
           var params = new URLSearchParams();
           params.append("number", this.loginForm.number);
@@ -68,18 +66,23 @@ export default defineComponent({
             url: '/api/login',
             data: params
           }).then(res => {
-            console.log('333')
             if(res.data['success']==true){
               this.$store.commit("CHANGE_ISUP", true);
               this.$store.commit("CHANGE_IDENTITY", res.data['identity']);
-              console.log('444')
-              console.log(res.data)
+              this.$store.commit("CHANGE_NUMBER", this.loginForm.number);
+              // localStorage.clear()
+              // localStorage.setItem('info',1)
+              // localStorage['flag']=1
+              // // localStorage.setItem('flag',1)
+              // sessionStorage.clear()
+              // // sessionStorage['userid']=JSON.stringify(res.data.userInfo.id)
+              // sessionStorage.setItem('userid',JSON.stringify(res.data.userInfo.id))
+              // sessionStorage['token']=JSON.stringify(res.data.token)
+
               if(res.data['identity']==1){
-                console.log('555')
                 this.$axios.get('/api/studentCourses',{params:
                   {number: this.loginForm.number}}
                 ).then(res=>{
-                  console.log('666')
                   this.$router.replace('/student')
                   var courses=[]
                   for(var course in res.data){
@@ -96,8 +99,11 @@ export default defineComponent({
                 this.$router.replace('/teacher')
               }
             }else{
-              console.log('000')
-              alert(res.data['msg']);
+              this.$message({
+                message:'用户名或者密码错误',
+                type:'warning'
+              })
+                        
             }
           });
         } else {
