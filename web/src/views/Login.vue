@@ -93,7 +93,22 @@ export default defineComponent({
                   this.$store.commit("CHANGE_COURSES", courses);
                 });
               }else if(res.data['identity']==2){
-                this.$router.replace('/teacher')
+                this.$axios.get('/api/teacherCourses',{
+                  params:{
+                    number:this.loginForm.number
+                  }
+                }).then(res=>{
+                  this.$router.replace('/teacher')
+                  let courses = []
+                  for(let course in res.data){
+                    courses.push({
+                      courseId: res.data[course]['courseId'],
+                      courseName: res.data[course]['courseName'],
+                      teacherName: res.data[course]['teacherName']
+                    })
+                  }
+                  this.$store.commit("CHANGE_COURSES", courses);
+                })
               }
             }else{
               console.log('000')

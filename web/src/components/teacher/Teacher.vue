@@ -41,6 +41,9 @@ export default {
      currentComponent:()=>import('./Total.vue'),
    }
   },
+  mounted(){
+    
+  },
   methods:{
     handleSelect(key){
       this.currentComponent = ()=>import(`./${key}`)
