@@ -30,7 +30,9 @@ public class FileController {
 
     private Logger log = LoggerFactory.getLogger("FileController");
 
-    // 上传作业
+    /**
+     * 学生上传作业
+     */
     @CrossOrigin(origins = "*")
     @PostMapping("/uploadHomework")
     public Result fileUploads(@RequestParam("file") MultipartFile file,
@@ -38,9 +40,23 @@ public class FileController {
                               @RequestParam("courseId") int courseId,
                               @RequestParam("homeworkId") int homeworkId){
         try {
-            return fileService.uploadHomework(number, courseId, homeworkId, file);
+            Result res = fileService.uploadHomework(number, courseId, homeworkId, file);
+            if(res.isSuccess()){
+                String filePath = System.getProperty("user.dir") + "\\src\\main\\";
+                // 获取上传的文件名称
+                String fileName = file.getOriginalFilename();
+                // 时间 和 日期拼接
+                String newFileName = number+"_"+courseId+"_"+homeworkId+"_"+fileName;
+                // 得到文件保存的位置以及新文件名
+                String destPath = filePath + "resources\\student_homework"+ File.separator+newFileName;
+                //存放文件
+                CommonUploadAndDownloadUtil.upload(destPath,file);
+
+            }
+            return res;
         }catch (DataAccessException e){
             log.error("/file/uploadHomework");
+            log.error(e.getMessage());
         }
         return new Result(500,false,"访问数据库失败");
 
@@ -59,7 +75,9 @@ public class FileController {
     }
     */
 
-    // 发布课程资源
+    /**
+     * 发布课程资源课件ppt等
+     */
     @CrossOrigin(origins = "*")
     @PostMapping("/addResource")
     public Result uploadResource(@RequestParam("courseId") int courseId,
@@ -76,7 +94,9 @@ public class FileController {
     }
 
 
-//    //下载文件
+    /**
+     * 下载文件
+     */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public void downloadFile(HttpServletResponse response,@RequestParam("link") String link){
@@ -84,6 +104,7 @@ public class FileController {
             CommonUploadAndDownloadUtil.downLoad(response, link);
         }catch (DataAccessException e){
             log.error("/file/download error");
+            log.error(e.getMessage());
         }
     }
 

@@ -118,6 +118,7 @@ public class CommonUploadAndDownloadUtil {
     //项目开始运行时创建student_homework和powerpoint两个文件夹
     public static void createDir(){
         try {
+            //System.out.println("创建初始文件夹");
             String path1 = filePath + "\\src\\main\\resources\\student_homework";
             Path path = Paths.get(path1);
             Files.createDirectories(path);

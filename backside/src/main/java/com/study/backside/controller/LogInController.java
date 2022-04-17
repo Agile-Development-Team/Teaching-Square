@@ -55,6 +55,7 @@ public class LogInController {
             return LoginResult.error(identity, name);
         }catch (DataAccessException e){
             logger.error("/login error");
+            logger.error(e.getMessage());
         }
         //待修改
         return LoginResult.error(0,"");
@@ -80,6 +81,7 @@ public class LogInController {
             return Result.error();
         }catch (DataAccessException e){
             logger.error("/register error");
+            logger.error(e.getMessage());
         }
         return Result.error();
     }

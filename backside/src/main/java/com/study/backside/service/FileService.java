@@ -40,9 +40,6 @@ public class FileService {
         // 得到文件保存的位置以及新文件名
         String destPath = filePath + "resources\\student_homework"+ File.separator+newFileName;
 
-        //存放文件
-        CommonUploadAndDownloadUtil.upload(destPath,file);
-
         //将存储路径存放至数据库表
         List<Integer> ids = homeworkMapper.getStudentHomeworkById(number,courseId,homeworkId);
         String grade = "0";
@@ -50,6 +47,7 @@ public class FileService {
 
             int res = homeworkMapper.uploadHomework(number, courseId, homeworkId, destPath, grade);
             if(res==1) {
+
                 return new Result(200, true, "上传成功");
             }
             return new Result(400, false, "上传失败");
@@ -76,18 +74,23 @@ public class FileService {
         // 得到文件保存的位置以及新文件名
         String destPath = filePath + "resources\\powerpoint"+ File.separator+newFileName;
 
-        //存放文件
-        CommonUploadAndDownloadUtil.upload(destPath,file);
+
         //存放至数据库
         Date currentDate = new Date();
         SimpleDateFormat  SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
         int res = powerpointMapper.addResource(new Powerpoint(courseId,pptId,title,SimpleDateFormat.format(currentDate.getTime()),destPath));
+        Result re = new Result(400, false, "上传失败");;
         if(res==1) {
-            return new Result(200, true, "上传成功");
+            re =  new Result(200, true, "上传成功");
         }
-        return new Result(400, false, "上传失败");
+        if(re.isSuccess()){
+            //存放文件
+            CommonUploadAndDownloadUtil.upload(destPath,file);
+        }
+        return re;
+
 
     }
 
