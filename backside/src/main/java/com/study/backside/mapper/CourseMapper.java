@@ -14,6 +14,7 @@ public interface CourseMapper {
     List<Course> getAllCourses() throws DataAccessException;
     List<CoursesRes> getStudentCourses(String number) throws DataAccessException;
     List<Integer> getCourseIdByStudentId(String number) throws DataAccessException;
+    List<String> getStudentNumberByCourseId(int courseId) throws DataAccessException;
     Course getCourseById(int courseId) throws DataAccessException;
     Course getCourseByIdAndCode(int courseId,String courseCode) throws DataAccessException;
     int addStudentCourse(String number,int courseId) throws DataAccessException;

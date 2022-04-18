@@ -22,5 +22,5 @@ public interface HomeworkMapper {
     int addHomework(Homework hw) throws DataAccessException;
     int getMaxHomeworkCount(int courseId) throws DataAccessException;
     List<Homework> getHomeworkByCourseIdAndHomeworkId(int courseId, int homeworkId) throws DataAccessException;
-
+    List<StudentHomework> getStudentsHomeworkOfCourse(String number, int courseId) throws DataAccessException;
 }

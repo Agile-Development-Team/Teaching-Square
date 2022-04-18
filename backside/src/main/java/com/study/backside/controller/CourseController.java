@@ -187,6 +187,22 @@ public class CourseController {
     }
 
     /**
+     * 教师端返回课程作业列表
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/teacherCourseHomeworks", method = RequestMethod.GET)
+    public List<HomeworkTeacherRes> getTeacherCourseHomeworks(
+                                                 @RequestParam(value = "courseId") int courseId){
+        try{
+            return courseService.getAllHomeworksFromTeacher(courseId);
+        } catch (DataAccessException e) {
+            log.error("/teacherCourseHomeworks error");
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      * 返回作业具体信息
      */
     @CrossOrigin(origins = "*")
@@ -198,6 +214,22 @@ public class CourseController {
             return courseService.getHomeworkDetails(number, courseId, homeworkId);
         } catch (Exception e) {
             log.error("/homeworkDetail error");
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 教师端返回学生完成作业情况
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/searchCourseStudents", method = RequestMethod.GET)
+    public List<StudentHomeworkStateRes> searchCourseStudents(
+                                                  @RequestParam(value = "courseId") int courseId){
+        try{
+            return courseService.getStudentHomeworkState(courseId);
+        } catch (DataAccessException e) {
+            log.error("/courseHomeworks error");
             log.error(e.getMessage());
         }
         return null;
