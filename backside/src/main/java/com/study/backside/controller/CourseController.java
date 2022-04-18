@@ -234,4 +234,25 @@ public class CourseController {
         }
         return null;
     }
+
+
+    /**
+     * 教师给作业打分
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/score", method = RequestMethod.POST)
+    public @ResponseBody
+    Result addScore(@RequestParam("courseId") int courseId,
+                    @RequestParam("homeworkId") int homeworkId,
+                    @RequestParam("number") String number,
+                    @RequestParam("score") double score) throws IOException{
+        try {
+            return courseService.addScore(courseId, homeworkId, number, score);
+        }catch (DataAccessException e){
+            log.error("/addScore error");
+            log.error(e.getMessage());
+        }
+        return new Result(500,false,"访问数据库失败");
+    }
+
 }

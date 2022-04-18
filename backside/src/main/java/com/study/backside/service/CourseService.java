@@ -187,4 +187,11 @@ public class CourseService {
         return res;
     }
 
+
+    public Result addScore(int courseId, int homeworkId, String number, double score) throws DataAccessException{
+        homeworkMapper.updateScore(number, courseId, homeworkId, score);
+
+        return Result.success();
+    }
+
 }

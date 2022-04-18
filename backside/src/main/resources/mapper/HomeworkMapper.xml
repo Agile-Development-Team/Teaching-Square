@@ -60,4 +60,9 @@
         SELECT * FROM student_homework where number=#{number} and course_id=#{courseId}
     </select>
 
+    <update id="updateScore">
+        update student_homework set grade=#{grade}
+        where number=#{number} and course_id=#{courseId} and homework_id=#{homeworkId}
+    </update>
+
 </mapper>
