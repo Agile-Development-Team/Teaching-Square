@@ -12,15 +12,18 @@
       <router-link to="/teacher">教师</router-link> |
       <router-link to="/studentcourse">课程</router-link>
     </div> -->
+
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
+
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    
   }
 }
 </script>

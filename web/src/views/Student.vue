@@ -63,7 +63,24 @@ export default defineComponent({
         teacherName: teacherName
       }
       this.$store.commit("CHANGE_SELECTCOURSE", course);
-
+      
+      this.$axios.get('/api/courseResources',{params:
+        {courseId: courseId}}
+      ).then(res=>{
+        console.log(res.data)
+        var resources=[]
+        for(let i in res.data){
+          // console.log(res.data[i]);
+          // console.log(res.data[i]['score']);
+          resources.push({
+            pptId: res.data[i]['pptId'],
+            pptName: res.data[i]['title'],
+            publishedTime: res.data[i]['publishedTime'],  
+            content: res.data[i]['link']
+          })
+        }
+        this.$store.commit("CHANGE_SELLECTCOURSEWARES", resources);
+      });
       
       this.$axios.get('/api/courseHomeworks',{params:
         {courseId: courseId,
