@@ -17,6 +17,7 @@
         <el-button type="primary" @click="joinCourse('joinForm')">加入</el-button>
       </el-form-item>
     </el-form> -->
+    
     <el-row
       v-for="index in this.$store.state.courses"
       :key="index['courseId']"
@@ -29,7 +30,12 @@
         </el-button>
       </el-col>
     </el-row>
+    <!-- <router-link  v-if="!courses" to="/" class="nocourse">
+      您尚未选择任何课程，请返回主页选择
+    </router-link> -->
   </div>
+
+  
 </template>
 
 <script>
@@ -55,6 +61,12 @@ export default defineComponent({
       }
     }
   },
+  // computed:{
+  //   //课程信息
+  //   courses(){
+  //     return this.$store.state.courses;
+  //   }
+  // },
   methods: {
     handleCourse(courseId, courseName, teacherName){
       var course = {
@@ -112,5 +124,9 @@ export default defineComponent({
 .classInf{
   margin-top: 50px;
 
+}
+.nocourse{
+  margin-top: 100px;
+  font-size: 50px;
 }
 </style>
