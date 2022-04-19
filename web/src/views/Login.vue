@@ -66,6 +66,7 @@ export default defineComponent({
             url: '/api/login',
             data: params
           }).then(res => {
+            console.log(res)
             if(res.data['success']==true){
               this.$store.commit("CHANGE_ISUP", true);
               this.$store.commit("CHANGE_IDENTITY", res.data['identity']);
@@ -101,7 +102,7 @@ export default defineComponent({
                     number:this.loginForm.number
                   }
                 }).then(res=>{
-                  this.$router.replace('/teacher')
+                  this.$router.replace('/teacherhome')
                   let courses = []
                   for(let course in res.data){
                     courses.push({

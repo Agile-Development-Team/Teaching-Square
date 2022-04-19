@@ -1,0 +1,29 @@
+.teacher-header{
+    height: 40px;
+    width: 100%;
+    min-width: 800px;
+}
+.teacher-course-list{
+    width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.course{
+    display: flex;
+    margin: 10px;
+    padding: 5px;
+    width:500px;
+    height: 100px;
+    cursor: pointer;
+    background-color: aliceblue;
+}
+
+.course div{
+    padding-top:25px
+}
+
+.course span{
+    font-size: 12px;
+}

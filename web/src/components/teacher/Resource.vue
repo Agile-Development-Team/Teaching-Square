@@ -58,11 +58,16 @@ export default {
   },
   mounted(){
     this.getResources()
-    this.resourceForm.courseId = this.$store.state.selectCourseId
+    this.resourceForm.courseId = this.$store.state.chooseCourseId
   },
   methods:{
     addResource(){
-      this.$axios.post('/api/addResource',this.resourceForm).then(res=>{
+      let params = new URLSearchParams()
+      params.append('courseId',this.resourceForm.courseId)
+      params.append('title',this.resourceForm.title)
+      params.append('file',this.resourceForm.file)
+
+      this.$axios.post('/api/file/addResource',params).then(res=>{
         console.log(res)
         this.getResources()
       })

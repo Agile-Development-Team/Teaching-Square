@@ -16,8 +16,8 @@
             </el-table>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="标题"></el-table-column>
-        <el-table-column prop="ddl" label="截止日期"></el-table-column>
+        <el-table-column prop="homeworkTitle" label="标题"></el-table-column>
+        <el-table-column prop="deadline" label="截止日期"></el-table-column>
       </el-table>
        <el-dialog :visible.sync="visible">
           <el-form :rules="rules" :model="homeworkForm">
@@ -31,7 +31,8 @@
                 <el-date-picker
                   v-model="homeworkForm.deadline"
                   type="datetime"
-                  placeholder="选择截止时间">
+                  placeholder="选择截止时间"
+                  value-format="yyyy-MM-dd HH:mm:ss">
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="作业占比(百分比)" prop="percentage">
@@ -52,22 +53,9 @@ export default {
     data(){
       return {
         homework:[
-          {
-            homeworkId:1, 
-            title:"完成八大排序算法",
-            ddl:"2021.12.30", 
-          },
-          {
-            homeworkId:2, 
-            title:"完成九大排序算法",
-            ddl:"2021.12.30", 
-          },
-      ],
+          
+        ],
         homeworkDetail:{
-          2:[
-            {studentName:'wyj',link:'http:////////'}
-          ]
-            
           
         },
         visible:false,
@@ -94,34 +82,37 @@ export default {
       }
     },
     mounted(){
-      //获取课程作业列表
-      this.$axios.get('/api/teacherCourseHomeworks',{
-        params:{
-          courseId:this.$store.state.selectCourseId
-        }
-      }).then(res=>{
-        console.log(res)
-        this.homework = res
-        for(let i of res){
-          //获取作业下的学生作业列表
-          this.$axios.post('/api/searchHomeworkStudents',{
-            courseId:this.$store.state.selectCourseId,
-            homeworkId:i.homeworkId
-          }).then(res=>{
-            console.log(res)
-            this.homeworkDetail[res[0].homeworkId] = res
-          })
-        }
-      })
+      this.init()
     },
     methods:{
+      init(){
+        //获取课程作业列表
+        this.$axios.get('/api/teacherCourseHomeworks',{
+          params:{
+            courseId:this.$store.state.chooseCourseId
+          }
+        }).then(res=>{
+          console.log('homework',res)
+          this.homework = res.data
+          for(let i of res){
+            //获取作业下的学生作业列表
+            this.$axios.post('/api/searchHomeworkStudents',{
+              courseId:this.$store.state.selectCourseId,
+              homeworkId:i.homeworkId
+            }).then(res=>{
+              console.log(res)
+              this.homeworkDetail[res.data[0].homeworkId] = res.data
+            })
+          }
+        })
+      },
       getHomeworkDetail(homeworkId){
         let res = this.homeworkDetail.filter(x=>x[0].homeworkId==homeworkId)
         if(res)
           return res[0]
         this.$axios.get('/api/searchHomeworkStudents',{
           params:{
-            courseId:this.$store.state.selectCourseId,
+            courseId:this.$store.state.chooseCourseId,
             homeworkId
           }
         }).then(res=>{
@@ -151,17 +142,14 @@ export default {
     },
     addHomework(){
       this.$axios.post('/api/addHomework',{
-        courseId:this.$store.selectCourseId,
+        courseId:this.$store.state.chooseCourseId,
         description:this.homeworkForm.description,
-        title:this.homeworkForm.title,
+        homeworkTitle:this.homeworkForm.title,
         deadline:this.homeworkForm.deadline,
         percentage:this.homeworkForm.percentage,
       }).then(res=>{
         console.log(res)
-        this.homework.push({
-          title:this.homeworkForm.title,
-          ddl:this.homeworkForm.deadline
-        })
+        this.init()
         this.visible = false
       })
     }

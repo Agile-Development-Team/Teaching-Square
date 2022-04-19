@@ -1,5 +1,5 @@
 <template>
-   <el-container>
+   <el-container style="width:100%">
      <el-header></el-header>
      <el-container>
        <el-aside style="width:150px">

@@ -5,16 +5,21 @@
                 <el-button @click="visible=true">创建课程</el-button>
             </div>
         </div>
-        <div v-for="course in this.$store.courses" :key="course.courseId" class="courseList" @click="getCourse(course.course)">
-            <div>
-                <p><span>课程：</span>{{course.courseName}}</p>
-            </div>
-            <div>
-                <p><span>任课教师</span>{{course.teacherName}}</p>
+        <div class="teacher-course-list">
+            <div v-for="course in this.$store.state.courses" :key="course.courseId"  @click="getCourse(course)" class="course">
+                 <div style="width:80px">
+                    <el-avatar icon="el-icon-user-solid"></el-avatar>
+                </div>
+                <div style="flex-grow:1">
+                    <p><span>课程:</span>{{course.courseName}}</p>
+                </div>
+                <div style="flex-grow:1">
+                    <p><span>任课教师:</span>{{course.teacherName}}</p>
+                </div>
             </div>
         </div>
         <el-dialog :visible.sync="visible">
-            <el-form :rules="rules" :model="courseForm">
+            <el-form :rules="rules" :model="this.courseForm">
                 <el-form-item label="课程名" prop="courseName">
                     <el-input v-model="courseForm.courseName"></el-input>
                 </el-form-item>
@@ -53,19 +58,23 @@ export default {
   },
   mounted(){
       this.courseForm.number = this.$store.state.number
+      console.log(this.$store.state)
   },
   methods:{
       getCourse(course){
+          console.log(course)
           this.$store.commit('CHANGE_SELECTCOURSE',course)
-
+          this.$store.commit('CHANGE_CHOOSECOURSEID',course.courseId)
           this.$router.push('/teacher')
       },
       addCourse(){
-          this.$axios.post('/api/addCourse',this.courseForm)
+          let tmp = this.courseForm
+          console.log(tmp)
+          this.$axios.post('/api/addCourse',tmp)
                      .then(res=>{
                          console.log(res)
                          this.visible = false
-                     })
+            })
       }
   },
   watch:{
@@ -80,9 +89,8 @@ export default {
 </script>
 
 <style scoped>
-    .courseList{
-        display: flex;
-        cursor: pointer;
-    }
     
+</style>
+<style src="../../assets/css/teacher.css">
+
 </style>
