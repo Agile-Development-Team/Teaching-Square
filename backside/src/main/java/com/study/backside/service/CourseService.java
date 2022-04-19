@@ -78,7 +78,13 @@ public class CourseService {
         List<ResourceRes> res = new ArrayList<>();
         for(Powerpoint re:resourceList){
             //String time = new SimpleDateFormat("yyyy-MM-dd").format(re.getPublishedTime());
-            res.add(new ResourceRes(re.getPptId(),re.getPptTitle(),re.getPublishedTime(),re.getLink()));
+            try {
+                res.add(new ResourceRes(re.getPptId(), re.getPptTitle(), re.getPublishedTime(), URLEncoder.encode(re.getLink(), "UTF-8")));
+            }catch (UnsupportedEncodingException e){
+                log.error("CourseService getCourseResources error");
+                log.error(e.getMessage());
+
+            }
 
         }
         return res;
@@ -90,7 +96,7 @@ public class CourseService {
         List<HomeworkStuRes> res = new ArrayList<>();
         try {
             for (StudentHomework sh : list) {
-                res.add(new HomeworkStuRes(studentMapper.getNameByNumber(sh.getNumber()), URLEncoder.encode(sh.getLink(), "UTF-8")));
+                res.add(new HomeworkStuRes(sh.getNumber(),studentMapper.getNameByNumber(sh.getNumber()), URLEncoder.encode(sh.getLink(), "UTF-8")));
             }
             return res;
         }catch (UnsupportedEncodingException e){
@@ -145,7 +151,11 @@ public class CourseService {
         List<HomeworkRes> res = new ArrayList<>();
         for(Homework hw : homeworks){
             int homeworkId = hw.getHomeworkId();
-            double score = homeworkMapper.getScoreByNumberAndCourseIdAndHomeworkId(number, courseId, homeworkId);
+            List<Double> scores = homeworkMapper.getScoreByNumberAndCourseIdAndHomeworkId(number, courseId, homeworkId);
+            if(scores==null||scores.size()==0){
+                return res;
+            }
+            double score = scores.get(0);
             HomeworkRes temp = new HomeworkRes(homeworkId, hw.getHomeworkTitle(), hw.getDeadline(), score);
             res.add(temp);
         }
