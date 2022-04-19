@@ -18,7 +18,8 @@
         <TakeCourse></TakeCourse>
       </el-collapse-item>
     </el-collapse>
-    <el-button @click="getCourses">TEST</el-button>
+    <!-- <el-button @click="getCourses">TEST</el-button> -->
+    <Footer />
   </div>
 </template>
 
@@ -26,11 +27,12 @@
 // @ is an alias to /src
 
 import TakeCourse from '@/components/TakeCourse.vue'
-
+import Footer from "@/components/Footer";
 export default {
   name: 'Home',
   components: {
-    TakeCourse
+    TakeCourse,
+    Footer
   },
   data () {
     return {

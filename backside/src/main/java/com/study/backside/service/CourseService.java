@@ -152,7 +152,21 @@ public class CourseService {
         return res;
     }
 
-    public  HomeworkDetailRes getHomeworkDetails(String number, int courseId, int homeworkId) throws DataAccessException{
+
+    public List<HomeworkTeacherRes> getAllHomeworksFromTeacher(int courseId) throws DataAccessException {
+
+        List<Homework> homeworks = homeworkMapper.getHomeworksByCourseId(courseId);
+        List<HomeworkTeacherRes> res = new ArrayList<>();
+        for(Homework hw : homeworks){
+            int homeworkId = hw.getHomeworkId();
+            //double score = homeworkMapper.getScoreByNumberAndCourseIdAndHomeworkId(number, courseId, homeworkId);
+            HomeworkTeacherRes temp = new HomeworkTeacherRes(homeworkId, hw.getHomeworkTitle(), hw.getDeadline());
+            res.add(temp);
+        }
+        return res;
+    }
+
+    public HomeworkDetailRes getHomeworkDetails(String number, int courseId, int homeworkId) throws DataAccessException{
         List<Homework> homeworks = homeworkMapper.getHomeworkByCourseIdAndHomeworkId(courseId, homeworkId);
         Homework hw = homeworks.get(0);
         String link = homeworkMapper.getLinkByNumberAndCourseIdAndHomeworkId(number, courseId, homeworkId);
@@ -160,5 +174,25 @@ public class CourseService {
         return temp;
     }
 
+    public List<StudentHomeworkStateRes> getStudentHomeworkState(int courseId) throws DataAccessException{
+        List<StudentHomeworkStateRes> res = new ArrayList<>();
+        List<Homework> homeworks = homeworkMapper.getHomeworksByCourseId(courseId);
+        List<String> numbers = courseMapper.getStudentNumberByCourseId(courseId);
+        for(String num : numbers){
+            String name = studentMapper.getNameByNumber(num);
+            List<StudentHomework> studentHomeworks = homeworkMapper.getStudentsHomeworkOfCourse(num, courseId);
+            StudentHomeworkStateRes temp = new StudentHomeworkStateRes(name, studentHomeworks.size(), homeworks.size());
+            res.add(temp);
+        }
+        return res;
+    }
+
+
+    public Result addScore(int courseId, int homeworkId, String number, double grade) throws DataAccessException{
+
+        homeworkMapper.updateScore(number, courseId, homeworkId, grade);
+
+        return Result.success();
+    }
 
 }

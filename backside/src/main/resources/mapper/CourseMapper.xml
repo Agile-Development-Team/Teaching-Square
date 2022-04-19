@@ -47,7 +47,9 @@
         )
     </select>
 
-
+    <select id="getStudentNumberByCourseId" resultType="java.lang.String">
+        SELECT number FROM student_course where course_id=#{courseId}
+    </select>
 
 
 

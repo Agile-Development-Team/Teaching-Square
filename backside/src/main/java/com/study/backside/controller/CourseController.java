@@ -2,8 +2,10 @@ package com.study.backside.controller;
 
 import com.study.backside.bean.Course;
 import com.study.backside.bean.Homework;
+import com.study.backside.bean.StudentHomework;
 import com.study.backside.request.AddCourseRe;
 import com.study.backside.request.ChooseCourseRe;
+import com.study.backside.request.ScoreRe;
 import com.study.backside.response.*;
 import com.study.backside.service.CourseService;
 import org.slf4j.Logger;
@@ -187,6 +189,22 @@ public class CourseController {
     }
 
     /**
+     * 教师端返回课程作业列表
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/teacherCourseHomeworks", method = RequestMethod.GET)
+    public List<HomeworkTeacherRes> getTeacherCourseHomeworks(
+                                                 @RequestParam(value = "courseId") int courseId){
+        try{
+            return courseService.getAllHomeworksFromTeacher(courseId);
+        } catch (DataAccessException e) {
+            log.error("/teacherCourseHomeworks error");
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      * 返回作业具体信息
      */
     @CrossOrigin(origins = "*")
@@ -202,4 +220,39 @@ public class CourseController {
         }
         return null;
     }
+
+    /**
+     * 教师端返回学生完成作业情况
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/searchCourseStudents", method = RequestMethod.GET)
+    public List<StudentHomeworkStateRes> searchCourseStudents(
+                                                  @RequestParam(value = "courseId") int courseId){
+        try{
+            return courseService.getStudentHomeworkState(courseId);
+        } catch (DataAccessException e) {
+            log.error("/courseHomeworks error");
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
+
+    /**
+     * 教师给作业打分
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/score", method = RequestMethod.POST)
+    public @ResponseBody
+    Result addScore(@RequestBody StudentHomework re) throws IOException{
+        try {
+
+            return courseService.addScore(re.getCourseId(),re.getHomeworkId(),re.getNumber(),re.getGrade());
+        }catch (DataAccessException e){
+            log.error("/addScore error");
+            log.error(e.getMessage());
+        }
+        return new Result(500,false,"访问数据库失败");
+    }
+
 }

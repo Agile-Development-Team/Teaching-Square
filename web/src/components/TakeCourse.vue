@@ -60,16 +60,40 @@ export default defineComponent({
       }else{
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            var params = new URLSearchParams();
-            params.append("courseId", this.$store.state.chooseCourseId);
-            params.append("number", this.$store.state.number);
-            params.append("courseCode", this.joinForm.code);
+            // var params = new URLSearchParams();
+            // params.append("courseId", this.$store.state.chooseCourseId);
+            // params.append("number", this.$store.state.number);
+            // params.append("courseCode", this.joinForm.code);
+            var jsons={  
+              courseId:this.$store.state.chooseCourseId,
+              number:this.$store.state.number,
+              courseCode:this.joinForm.code
+            }
             this.$axios({
               method: "post",
               url: '/api/chooseCourse',
-              data: params
+              data: jsons,
+              header:{
+                'Content-Type':'application/json'  //如果写成contentType会报错
+              }
+
             }).then(res => {
               alert(res.data['msg'])
+              this.$axios.get('/api/studentCourses',{params:
+                {number: this.$store.state.number}}
+              ).then(res=>{
+                this.$router.replace('/student')
+                var courses=[]
+                for(var course in res.data){
+                  console.log(res.data[course]['courseId'])
+                  courses.push({
+                    courseId: res.data[course]['courseId'],
+                    courseName: res.data[course]['courseName'],
+                    teacherName: res.data[course]['teacherName']
+                  })
+                }
+                this.$store.commit("CHANGE_COURSES", courses);
+              });
             });
             
             // this.$router.replace('/student')
