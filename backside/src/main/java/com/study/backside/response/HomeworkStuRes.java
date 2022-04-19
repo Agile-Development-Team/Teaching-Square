@@ -1,10 +1,12 @@
 package com.study.backside.response;
 
 public class HomeworkStuRes {
+    private String number;
     private String name;
     private String link;
 
-    public HomeworkStuRes(String na,String link){
+    public HomeworkStuRes(String num,String na,String link){
+        this.number = num;
         this.name = na;
         this.link = link;
     }
@@ -15,6 +17,14 @@ public class HomeworkStuRes {
 
     public String getName() {
         return name;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public void setLink(String link) {
