@@ -65,16 +65,32 @@ export default {
           console.log(course)
           this.$store.commit('CHANGE_SELECTCOURSE',course)
           this.$store.commit('CHANGE_CHOOSECOURSEID',course.courseId)
+          
           this.$router.push('/teacher')
       },
       addCourse(){
           let tmp = this.courseForm
           console.log(tmp)
           this.$axios.post('/api/addCourse',tmp)
-                     .then(res=>{
-                         console.log(res)
-                         this.visible = false
-            })
+                .then(res=>{
+                        console.log(res)
+                        this.$axios.get('/api/teacherCourses',{
+                            params:{
+                                number:this.$store.state.number
+                            }
+                        }).then(res=>{
+                            let courses = []
+                            for(let course in res.data){
+                                courses.push({
+                                courseId: res.data[course]['courseId'],
+                                courseName: res.data[course]['courseName'],
+                                teacherName: res.data[course]['teacherName']
+                                })
+                            }
+                            this.$store.commit("CHANGE_COURSES", courses);
+                    })
+                        this.visible = false
+                })
       }
   },
   watch:{

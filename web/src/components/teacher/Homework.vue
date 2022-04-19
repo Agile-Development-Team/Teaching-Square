@@ -7,10 +7,22 @@
         <el-table-column type="expand">
           <template slot-scope="scope">
             <el-table :data="homeworkDetail[scope.row.homeworkId]">
-              <el-table-column prop="studentName" label="学生姓名"></el-table-column>
+              <el-table-column prop="name" label="学生姓名"></el-table-column>
               <el-table-column label="下载链接">
                 <template slot-scope="scope">
                   <el-link @click="download(scope.row.link)">下载</el-link>
+                </template>
+              </el-table-column>
+              <el-table-column label="分数">
+                <template slot-scope="scope">
+                  <el-form :inline="true">
+                    <el-form-item>
+                      <el-input v-model="scope.row.grade"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button @click="score(scope.row)">提交</el-button>
+                    </el-form-item>
+                  </el-form>
                 </template>
               </el-table-column>
             </el-table>
@@ -94,14 +106,20 @@ export default {
         }).then(res=>{
           console.log('homework',res)
           this.homework = res.data
-          for(let i of res){
+          for(let i of this.homework){
             //获取作业下的学生作业列表
-            this.$axios.post('/api/searchHomeworkStudents',{
-              courseId:this.$store.state.selectCourseId,
-              homeworkId:i.homeworkId
+            this.$axios.get('/api/searchHomeworkStudents',{
+              params:{
+                courseId:this.$store.state.chooseCourseId,
+                homeworkId:i.homeworkId
+              }
             }).then(res=>{
               console.log(res)
-              this.homeworkDetail[res.data[0].homeworkId] = res.data
+              for(let detail of res.data){
+                detail.homeworkId = i.homeworkId
+              }
+              this.homeworkDetail[i.homeworkId] = res.data
+              console.log('detail',this.homeworkDetail)
             })
           }
         })
@@ -116,19 +134,19 @@ export default {
             homeworkId
           }
         }).then(res=>{
-          console.log(res)
+          console.log('detail',res)
           return res
         })
       },
       download(link){
         console.log(link)
-        this.$axios.get('/api/download',{
+        this.$axios.get('/api/file/download',{
           params:{
             link
           },
           responseType:'blob'
         }).then(res=>{
-          let blob = new Blob([res.data],{type:"pdf"})
+          let blob = new Blob([res.data],{type:"application/pdf;charset=UTF-8"})
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onload = e => {
@@ -151,6 +169,18 @@ export default {
         console.log(res)
         this.init()
         this.visible = false
+      })
+    },
+    score(row){
+      this.$axios.post('/api/score',{
+        courseId:this.$store.state.chooseCourseId,
+        number:row.number,
+        homeworkId:row.homeworkId,
+        grade:row.grade
+      }).then(res=>{
+        if(res.msg==200){
+          this.$message.success('提交成功！')
+        }
       })
     }
   },
