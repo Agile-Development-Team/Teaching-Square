@@ -94,6 +94,8 @@ export default defineComponent({
                 }
                 this.$store.commit("CHANGE_COURSES", courses);
               });
+            }).catch(err=>{
+              console.log(err);
             });
             
             // this.$router.replace('/student')

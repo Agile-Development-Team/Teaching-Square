@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +44,7 @@ public class FileService {
         String destPath = filePath + "resources\\student_homework"+ File.separator+newFileName;
 
         //将存储路径存放至数据库表
+
         List<Integer> ids = homeworkMapper.getStudentHomeworkById(number,courseId,homeworkId);
         String grade = "0";
         if(ids.size()==0) {
@@ -56,8 +60,8 @@ public class FileService {
 
         }
         else{
-
             homeworkMapper.updateHomework(number, courseId, homeworkId, destPath, grade);
+
             return new Result(200, true, "更新成功");
         }
 
@@ -87,6 +91,7 @@ public class FileService {
         }
         if(re.isSuccess()){
             //存放文件
+
             CommonUploadAndDownloadUtil.upload(destPath,file);
         }
         return re;

@@ -46,6 +46,8 @@ public class CommonUploadAndDownloadUtil {
         }
         // 获取文件名
         String fileName = file.getName();
+        int idx = fileName.lastIndexOf("_");
+        fileName = fileName.substring(idx+1);
         // 重置response
         response.reset();
         // ContentType，即告诉客户端所发送的数据属于什么类型
@@ -101,12 +103,18 @@ public class CommonUploadAndDownloadUtil {
     public static void upload(String destPath, MultipartFile file){
 
         // 生成文件
+
         File dest = new File(destPath);
         try {
             // 上传的文件被保存了
-            file.transferTo(dest);
-            // 打印日志
-            log.info("上传成功，当前上传的文件保存在 {}",destPath);
+            //if(dest.exists()) {
+                file.transferTo(dest);
+                // 打印日志
+                log.info("上传成功，当前上传的文件保存在 {}",destPath);
+//            }
+//            else{
+//                log.info("文件保存失败,路径为 {}",destPath);
+//            }
         } catch (IOException e) {
             log.error(e.toString());
         }

@@ -92,9 +92,11 @@ export default defineComponent({
           })
         }
         this.$store.commit("CHANGE_SELLECTCOURSEWARES", resources);
+      }).catch(err=>{
+        console.log(err);
       });
       
-      this.$axios.get('/api/courseHomeworks',{params:
+      this.$axios.get('/api/teacherCourseHomeworks',{params:
         {courseId: courseId,
           number: this.$store.state.number}}
       ).then(res=>{
@@ -106,12 +108,15 @@ export default defineComponent({
             homeworkId: res.data[i]['homeworkId'],
             homeworkName: res.data[i]['homeworkTitle'],
             deadline: res.data[i]['deadline'],
-            grade: res.data[i]['score']
+            grade: 0
+            // grade: res.data[i]['score']
           })
         }
         console.log(homeworks)
         this.$store.commit("CHANGE_SELECTHOMEWORKS", homeworks);
         this.$router.replace('/studentcourse')
+      }).catch(err=>{
+        console.log(err);
       });
 
     },
@@ -128,5 +133,9 @@ export default defineComponent({
 .nocourse{
   margin-top: 100px;
   font-size: 50px;
+}
+.course-btn{
+  width: 250px;
+  height: 60px;
 }
 </style>
