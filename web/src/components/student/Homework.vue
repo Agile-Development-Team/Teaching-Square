@@ -37,7 +37,7 @@
         {{this.$store.state.selectedHomework['deadline']}}
       </el-descriptions-item>
       <el-descriptions-item label="提交状态">
-        已提交
+        {{this.$store.state.selectedHomework['status']}}
       </el-descriptions-item>
       <el-descriptions-item label="提交内容">
         {{this.$store.state.selectedHomework['content']}}
@@ -89,10 +89,10 @@ export default defineComponent({
             detail['grade']=grade
             detail['description']=res.data['description']
             detail['content']=res.data['link']
-            if(detail['content']==''){
-              detail['status']='0'
+            if(detail['content']==null){
+              detail['status']='未提交'
             }else{
-              detail['status']='1'
+              detail['status']='已提交'
             }
             detail['percentage']='未定义'
             console.log(detail)
@@ -156,13 +156,19 @@ export default defineComponent({
             detail['grade']=this.$store.state.selectedHomework['grade']
             detail['description']=res.data['description']
             detail['content']=res.data['link']
-            if(detail['content']==''){
-              detail['status']='0'
+            
+            if(detail['content']==null){
+              // console.log('link0')
+              detail['status']='未提交'
             }else{
-              detail['status']='1'
+              // console.log('link1')
+              detail['status']='已提交'
             }
             detail['percentage']='未定义'
             console.log(detail)
+            // console.log('link')
+            // console.log(res.data['link'])
+            // console.log(res.data)
             this.$store.commit("CHANGE_SELECTEDHOMEWORK", detail);
             
           });

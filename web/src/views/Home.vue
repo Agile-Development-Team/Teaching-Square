@@ -45,7 +45,7 @@ export default {
   methods: {
     getCourses(){
       console.log(this)
-      this.$axios.get('http://localhost:8888/course').then(res => {
+      this.$axios.get('/api/course').then(res => {
         // data = res.data;
         var allCourses=[]
         for(var course in res.data){
@@ -58,6 +58,8 @@ export default {
         }
         this.$store.commit("CHANGE_ALLCOURSES", allCourses);
         console.log(res);
+      }).catch(err=>{
+        console.log(err);
       });
     },
     handleChange(val) {
