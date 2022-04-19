@@ -188,8 +188,9 @@ public class CourseService {
     }
 
 
-    public Result addScore(int courseId, int homeworkId, String number, double score) throws DataAccessException{
-        homeworkMapper.updateScore(number, courseId, homeworkId, score);
+    public Result addScore(int courseId, int homeworkId, String number, double grade) throws DataAccessException{
+
+        homeworkMapper.updateScore(number, courseId, homeworkId, grade);
 
         return Result.success();
     }

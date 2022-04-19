@@ -1,29 +1,20 @@
-package com.study.backside.bean;
+package com.study.backside.request;
 
-import lombok.Data;
-
-
-public class StudentHomework {
+public class ScoreRe {
     private int courseId;
     private int homeworkId;
     private String number;
     private String link;
     private double grade;
 
-    public StudentHomework(){}
-    public StudentHomework(int cId,int hId,String num,String link,double grade){
-        this.courseId = cId;
-        this.homeworkId = hId;
-        this.number = num;
-        this.link = link;
-        this.grade = grade;
-    }
-    public StudentHomework(int cId,int hId,String num,double grade){
+    public ScoreRe(){}
+    public ScoreRe(int cId,int hId,String num,double grade){
         this.courseId = cId;
         this.homeworkId = hId;
         this.number = num;
         this.grade = grade;
     }
+
 
     public int getCourseId() {
         return courseId;
@@ -65,4 +56,3 @@ public class StudentHomework {
         this.grade = grade;
     }
 }
-

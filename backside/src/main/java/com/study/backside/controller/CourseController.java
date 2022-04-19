@@ -2,8 +2,10 @@ package com.study.backside.controller;
 
 import com.study.backside.bean.Course;
 import com.study.backside.bean.Homework;
+import com.study.backside.bean.StudentHomework;
 import com.study.backside.request.AddCourseRe;
 import com.study.backside.request.ChooseCourseRe;
+import com.study.backside.request.ScoreRe;
 import com.study.backside.response.*;
 import com.study.backside.service.CourseService;
 import org.slf4j.Logger;
@@ -242,12 +244,10 @@ public class CourseController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/score", method = RequestMethod.POST)
     public @ResponseBody
-    Result addScore(@RequestParam("courseId") int courseId,
-                    @RequestParam("homeworkId") int homeworkId,
-                    @RequestParam("number") String number,
-                    @RequestParam("score") double score) throws IOException{
+    Result addScore(@RequestBody StudentHomework re) throws IOException{
         try {
-            return courseService.addScore(courseId, homeworkId, number, score);
+
+            return courseService.addScore(re.getCourseId(),re.getHomeworkId(),re.getNumber(),re.getGrade());
         }catch (DataAccessException e){
             log.error("/addScore error");
             log.error(e.getMessage());
